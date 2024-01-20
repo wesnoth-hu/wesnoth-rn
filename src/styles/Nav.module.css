@@ -1,0 +1,91 @@
+/** @format */
+
+.nav {
+  padding-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 22px;
+}
+
+.navitem {
+  color: goldenrod;
+  font-size: 1.5rem;
+  font-weight: 550;
+  margin: 0px 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: goldenrod;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: darkgoldenrod;
+}
+
+.shrunk995 {
+  display: none;
+  cursor: pointer;
+}
+
+.shrunk650 {
+  display: none;
+  cursor: pointer;
+}
+
+.menu995,
+.menu650 {
+  color: goldenrod;
+  font-size: 1.5rem;
+  font-weight: 550;
+}
+
+.menu995:hover,
+.menu650:hover {
+  color: darkgoldenrod;
+}
+
+.hamburgerMenu {
+  display: flex;
+  min-width: 150px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 20px solid transparent;
+  border-image: url("/lablec.jpg") 25 round;
+  background-color: #dad1a0;
+}
+
+@media (max-width: 995px) {
+  .nav {
+    display: none;
+  }
+  .shrunk995 {
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 650px) {
+  .nav {
+    display: none;
+  }
+  .shrunk995 {
+    display: none;
+  }
+  .shrunk650 {
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 22px;
+  }
+}
