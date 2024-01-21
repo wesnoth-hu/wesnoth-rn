@@ -11,6 +11,10 @@ export const commentSchema = new Schema({
         immutable: true,
         default: () => Date.now()
     },
+    updatedAt: {
+        type: Date,
+        default: () => Date.now(),
+    },
 });
 
 const Comment = model('Post', commentSchema);

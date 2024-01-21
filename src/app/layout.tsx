@@ -24,8 +24,6 @@ const ebg = localFont({
   display: "swap",
 });
 
-
-
 mongoose.connect('mongodb+srv://wesnothhu:2kkm1NOH@cluster0.iqtkewh.mongodb.net/wesnoth?retryWrites=true&w=majority');
 
 export default function RootLayout({
