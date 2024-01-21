@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import mongoose from 'mongoose';
+
 import localFont from "next/font/local";
 import Image from "next/image";
 
