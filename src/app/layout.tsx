@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import type { Metadata } from "next";
 
 import localFont from "next/font/local";
@@ -21,6 +23,10 @@ const ebg = localFont({
   src: "./font/ebg.ttf",
   display: "swap",
 });
+
+
+
+mongoose.connect('mongodb+srv://wesnothhu:2kkm1NOH@cluster0.iqtkewh.mongodb.net/wesnoth?retryWrites=true&w=majority');
 
 export default function RootLayout({
   children,
