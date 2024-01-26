@@ -1,3 +1,5 @@
+'use client'
+
 import { useSignUp } from "@clerk/nextjs";
  
 import React, { ChangeEvent, useState} from 'react';
@@ -49,10 +51,14 @@ const SignUp: React.FC = () => {
             return;
         };
 
-        await signUp.create({
-            data.email,
-            data.password
-        });
+        try {
+            // await signUp.create({
+            //     data.email,
+            //     data.password
+            // });
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     const [errors, setErrors] = useState<ValidationError<typeof signUpZodSchema>>({});

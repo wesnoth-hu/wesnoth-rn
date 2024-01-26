@@ -24,6 +24,8 @@ const ebg = localFont({
   display: "swap",
 });
 
+
+
 export default function RootLayout({
   children,
 }: {
@@ -34,28 +36,42 @@ export default function RootLayout({
     <html lang="en">
       <body className={ebg.className}>
         <main className={styles.main}>
-          <div className={styles.fejlec}>
-            <div className={styles.logo}>
-              <Image
-                src="/logo-hu.png"
-                alt="Hungarian Wesnoth Logo"
-                width={415}
-                height={210}
-                priority
-                className={styles.logoImg}
-              />
+          
+          <header>
+            <div className={styles.fejlec}>
+              <div className={styles.logo}>
+                <Image
+                  src="/logo-hu.png"
+                  alt="Hungarian Wesnoth Logo"
+                  width={415}
+                  height={210}
+                  priority
+                  className={styles.logoImg}
+                  />
+              </div>
             </div>
-            <Nav />
-          </div>
+          </header>
+
+          <nav>
+              <Nav />
+          </nav>
 
           <div className={styles.tartkozep}>
-            <div className={styles.sideProfile}>Side</div>
-            <div className={styles.kozep}>{children}</div>
+            <aside>
+              <div className={styles.sideProfile}>Side</div>
+            </aside>
+
+            <section>
+              <div className={styles.kozep}>{children}</div>
+            </section>
           </div>
 
-          <div className={styles.lablec}>
-            <Footer />
-          </div>
+          <footer>
+            <div className={styles.lablec}>
+              <Footer />
+            </div>
+          </footer>
+
         </main>
       </body>
     </html>
