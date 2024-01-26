@@ -52,10 +52,11 @@ const SignUp: React.FC = () => {
         };
 
         try {
-            // await signUp.create({
-            //     data.email,
-            //     data.password
-            // });
+            // 'data' does not exist on type Partial...etc.
+            await signUp.create({
+                data.email,
+                data.password
+            });
         } catch (error) {
             console.log(error)
         }
