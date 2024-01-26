@@ -9,13 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "lucia": "^2.7.6",
-    "mongoose": "^8.1.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1",
     "nanoid": "^5.0.4",
     "next": "14.1.0",
     "nodemailer": "^6.9.8",
@@ -29,6 +30,6 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   }
 }

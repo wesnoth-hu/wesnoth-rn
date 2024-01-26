@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-
 import type { Metadata } from "next";
+
+import { ClerkProvider } from '@clerk/nextjs'
 
 import localFont from "next/font/local";
 import Image from "next/image";
@@ -24,14 +24,13 @@ const ebg = localFont({
   display: "swap",
 });
 
-mongoose.connect('mongodb+srv://wesnothhu:2kkm1NOH@cluster0.iqtkewh.mongodb.net/wesnoth?retryWrites=true&w=majority');
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className={ebg.className}>
         <main className={styles.main}>
@@ -60,5 +59,6 @@ export default function RootLayout({
         </main>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

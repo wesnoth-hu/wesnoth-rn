@@ -1,6 +1,5 @@
-'use client'
-import SendEmailVerification from '@/lib/sendEmailVerification';
-
+import { useSignUp } from "@clerk/nextjs";
+ 
 import React, { ChangeEvent, useState} from 'react';
 import Image from 'next/image';
 
@@ -16,6 +15,8 @@ type InputChangeEvent =
     | ChangeEvent<HTMLSelectElement>;
 
 const SignUp: React.FC = () => {
+
+    const { isLoaded, signUp } = useSignUp();
 
     const [signUpData, setSignUpData] = useState<signUpType>({
         username: "",
@@ -43,13 +44,18 @@ const SignUp: React.FC = () => {
         })
     };
 
+    const onClickSubmit = async (data: signUpType) => {
+        if (!isLoaded) {
+            return;
+        };
+
+        await signUp.create({
+            data.email,
+            data.password
+        });
+    };
 
     const [errors, setErrors] = useState<ValidationError<typeof signUpZodSchema>>({});
-
-    const onClickSubmit = async (data: signUpType) => {
-        // TODO - create user in Mongodb with Mongoose
-        // TODO - sendEmailVerifixation
-    };
 
     const schemaParse = (data: signUpType) => {
         handleZodValidation({
@@ -67,7 +73,7 @@ const SignUp: React.FC = () => {
     return (
         <>
             <main className={styles.main}>
-                <><div className={styles.form}>
+                <div className={styles.form}>
                     {/* Labels */}
                     <div className={styles.labels}>
                         <label htmlFor="username" >Felhasználónév:</label>
@@ -160,10 +166,6 @@ const SignUp: React.FC = () => {
                         {errors && errors.password && <div style={{ color: "red" }}>Jelszó - {errors.password}</div>}
                         {errors && errors.confirm && <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}</div>}
                     </div>
-                </>
-                {/* <>
-                    <div>Sikeres regisztracio!</div>
-                </> */}
             </main>
         </>
     )

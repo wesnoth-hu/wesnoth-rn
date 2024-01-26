@@ -138,10 +138,10 @@ export default function Nav() {
             <div className={styles.nav}>
                 {/* {(user) && <>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
-                        <Link href="#" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
+                        <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
-                        <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
+                        <Link href="/api/auth/logout" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
                 </>} */}
                 {<>
