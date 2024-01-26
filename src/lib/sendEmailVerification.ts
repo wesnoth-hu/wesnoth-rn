@@ -1,8 +1,6 @@
-'use server'
 
-// import { db } from "@/firebase/config";
-// import {} from 'firebase/firestore';\
 import { nanoid } from "nanoid";
+import { sendMailNotification } from "./emailVerificationNotification";
 
 var nodemailer = require("nodemailer");
 
@@ -55,11 +53,14 @@ export async function sendMail(toEmail:string, username: string, code: string) {
         ],
   };
 
-  transporter.sendMail(mailOptions, function (error:any, info: any) {
+  transporter.sendMail(mailOptions, async function (error:any, info: any) {
     if (error) {
       throw new Error(error);
     } else {
       console.log("Email Sent");
+      // TODO add email notification after email verification codes have been sent,
+      // probably an Admin UI inside the webpage
+      await sendMailNotification(toEmail,username,code);
       return true;
     }
   });
