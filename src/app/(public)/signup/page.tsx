@@ -1,7 +1,7 @@
 'use client'
 
-import { useSignUp } from "@clerk/nextjs";
- 
+import userCreateDB from "@/lib/userCreateDB";
+
 import React, { ChangeEvent, useState} from 'react';
 import Image from 'next/image';
 
@@ -18,14 +18,13 @@ type InputChangeEvent =
 
 const SignUp: React.FC = () => {
 
-    const { isLoaded, signUp } = useSignUp();
-
+    
     const [signUpData, setSignUpData] = useState<signUpType>({
         username: "",
         email: "",
         password: "",
         confirm: "",
-        race: "bat",
+        race: "bat"
     });
 
     const handleInputChange = (e: InputChangeEvent) => {
@@ -42,27 +41,16 @@ const SignUp: React.FC = () => {
             email: "",
             password: "",
             confirm: "",
-            race: "bat",
+            race: "bat"
         })
     };
 
-    const onClickSubmit = async (data: signUpType) => {
-        if (!isLoaded) {
-            return;
-        };
-
-        try {
-            // 'data' does not exist on type Partial...etc.
-            await signUp.create({
-                data.email,
-                data.password
-            });
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
     const [errors, setErrors] = useState<ValidationError<typeof signUpZodSchema>>({});
+
+    const onClickSubmit = (signupdata: signUpType) => {
+            userCreateDB(signupdata);
+            resetForm();
+    };
 
     const schemaParse = (data: signUpType) => {
         handleZodValidation({
@@ -79,7 +67,7 @@ const SignUp: React.FC = () => {
 
     return (
         <>
-            <main className={styles.main}>
+           <main className={styles.main}>
                 <div className={styles.form}>
                     {/* Labels */}
                     <div className={styles.labels}>

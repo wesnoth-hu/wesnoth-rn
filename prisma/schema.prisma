@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id            String     @id @db.VarChar(100)
+  username      String     @db.VarChar(100)
+  email         String     @db.VarChar(100)
+  password      String     @db.VarChar(100)
+  emailVerified Boolean
+  race          String     @db.VarChar(100)
+  money         Int?
+  createdAt     DateTime   @default(now()) @db.DateTime(0)
+  updatedAt     DateTime   @default(now()) @updatedAt @db.DateTime(0)
+  savegames     savegames?
+}
+
+model savegames {
+  id         String   @id @db.VarChar(100)
+  userId     String   @db.VarChar(100)
+  filename   String   @db.VarChar(100)
+  uploadedAt DateTime @default(now()) @db.DateTime(0)
+  user       user     @relation(fields: [id], references: [id], onDelete: Cascade, map: "savegames_user_FK")
+}
