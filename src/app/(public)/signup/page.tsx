@@ -5,10 +5,10 @@ import userCreateDB from "@/lib/userCreateDB";
 import React, { ChangeEvent, useState} from 'react';
 import Image from 'next/image';
 
-import styles from '@/styles/Auth.module.css';
+import styles from '@/styles/Signup.module.css';
 
-import { signUpZodSchema } from '@/lib/signUpZodSchema';
 import { signUpType } from '@/lib/signUpType';
+import { signUpZodSchema } from '@/lib/signUpZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 
