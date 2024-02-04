@@ -1,8 +1,10 @@
 'use client'
 
-import userLoginDB from "@/lib/userLoginDB";
-import { loginType } from "@/lib/loginType";
+import { useRouter } from "next/navigation";
 
+import userLoginDB from "@/lib/userLoginDB";
+
+import { loginType } from "@/lib/loginType";
 import { loginZodSchema } from '@/lib/loginZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
@@ -13,8 +15,7 @@ import styles from '@/styles/Login.module.css';
 
 export default function Page() {
 
-    // TODO replace with setting JWT+CSRF token
-    const [loginState, setLoginState] = useState<boolean>(false);
+    const router = useRouter();
 
     const [loginData, setLoginData] = useState<loginType>({
         email: "",
@@ -43,10 +44,9 @@ export default function Page() {
     const onClickLogin = async (logindata: loginType) => {
         try {
             await userLoginDB(logindata);
-
-            setLoginState(!loginState);
-
+            
             resetForm();
+            router.push('/account');
         } catch (error) {
             console.log(error);
         }
@@ -68,7 +68,7 @@ export default function Page() {
     return (
         <>
             <main className={styles.main}>
-                {loginState === false && <><div className={styles.form}>
+                <div className={styles.form}>
                     {/* Labels */}
                     <div className={styles.labels}>
                         <label htmlFor="email" >Email:</label>
@@ -116,8 +116,6 @@ export default function Page() {
                         {errors && errors.password && <div style={{ color: "red" }}>Jelszó - {errors.password}</div>}
                         {errors && errors.confirm && <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}</div>}
                     </div>
-                </>}
-                {loginState === true && "Logged In!"}
             </main>
         </>
     )

@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 
 const bcrypt = require('bcrypt');
 
-export default async function userCreateDB(signup:signUpType) {
+export default async function userCreateDB(signup:signUpType): Promise<void> {
 
     const prisma = new PrismaClient();
 
