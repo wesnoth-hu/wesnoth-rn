@@ -15,8 +15,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import GetCookie from '@/components/Cookies/getCookie';
+import DeleteCookie from '@/components/Cookies/deleteCookie';
 
 import styles from '@/styles/Nav.module.css';
+
 
 export default function Nav() {
 
@@ -136,12 +139,12 @@ export default function Nav() {
     return (
         <>
             <div className={styles.nav}>
-                {/* {(user) && <>
+                {/* {&& <>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
                         <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
-                    <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
-                        <Link href="/api/auth/logout" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
+                    <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookie(); router.push('/') }}>
+                        <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
                 </>} */}
                 {<>

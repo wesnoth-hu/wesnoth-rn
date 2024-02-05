@@ -1,15 +1,14 @@
 'use client'
 
-import { useRouter } from "next/navigation";
+import userLoginDB from "@/components/userLogin/userLoginDB";
 
-import userLoginDB from "@/lib/userLoginDB";
-
-import { loginType } from "@/lib/loginType";
+import type { loginType } from "@/lib/loginType";
 import { loginZodSchema } from '@/lib/loginZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 
 import React, { ChangeEvent, useState } from 'react';
+import { useRouter } from "next/navigation";
 
 import styles from '@/styles/Login.module.css';
 
@@ -44,7 +43,6 @@ export default function Page() {
     const onClickLogin = async (logindata: loginType) => {
         try {
             await userLoginDB(logindata);
-            
             resetForm();
             router.push('/account');
         } catch (error) {

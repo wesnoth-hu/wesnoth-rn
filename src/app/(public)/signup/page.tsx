@@ -1,6 +1,6 @@
 'use client'
 
-import userCreateDB from "@/lib/userCreateDB";
+import userCreateDB from "@/components/userCreate/userCreateDB";
 
 import React, { ChangeEvent, useState} from 'react';
 import Image from 'next/image';
