@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 
-import { ClerkProvider } from '@clerk/nextjs'
-
 import localFont from "next/font/local";
 import Image from "next/image";
 
@@ -24,15 +22,12 @@ const ebg = localFont({
   display: "swap",
 });
 
-
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
     <html lang="en">
       <body className={ebg.className}>
         <main className={styles.main}>
@@ -49,22 +44,21 @@ export default function RootLayout({
                   className={styles.logoImg}
                   />
               </div>
+
+              <nav>
+                <Nav />
+              </nav>
             </div>
           </header>
 
-          <nav>
-              <Nav />
-          </nav>
-
-          <div className={styles.tartkozep}>
-            <aside>
+          <section>
+            <div className={styles.tartkozep}>
+              {/*Aside Left*/}
               <div className={styles.sideProfile}>Side</div>
-            </aside>
-
-            <section>
+              {/*Section*/}
               <div className={styles.kozep}>{children}</div>
-            </section>
-          </div>
+            </div>
+          </section>
 
           <footer>
             <div className={styles.lablec}>
@@ -75,6 +69,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-    </ClerkProvider>
   );
 }

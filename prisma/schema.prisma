@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id            String     @id @db.VarChar(100)
+  username      String     @db.VarChar(100)
+  email         String     @db.VarChar(100)
+  password      String     @db.VarChar(100)
+  emailVerified Boolean
+  race          String     @db.VarChar(100)
+  money         Int?
+  createdAt     DateTime   @default(now()) @db.DateTime(0)
+  updatedAt     DateTime   @default(now()) @updatedAt @db.DateTime(0)
+  comment       comment?
+  post          post?
+  savegames     savegames?
+  session       session?
+}
+
+model savegames {
+  id         String   @id @db.VarChar(100)
+  userID     String   @unique(map: "savegames_unique") @db.VarChar(100)
+  filename   String   @db.VarChar(100)
+  uploadedAt DateTime @default(now()) @db.DateTime(0)
+  user       user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "savegames_user_FK")
+}
+
+model session {
+  id          Int      @id @default(autoincrement())
+  userID      String   @unique(map: "session_unique") @db.VarChar(100)
+  sessionData String   @db.MediumText
+  createdAt   DateTime @default(now()) @db.DateTime(0)
+  user        user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "session_user_FK")
+}
+
+model comment {
+  id                          String   @id @db.VarChar(16)
+  content                     String   @db.VarChar(1000)
+  author                      String   @db.VarChar(100)
+  authorID                    String   @unique(map: "comment_unique") @db.VarChar(100)
+  postID                      String   @unique(map: "comment_unique_1") @db.VarChar(100)
+  createdAt                   DateTime @default(now()) @db.DateTime(0)
+  updatedAt                   DateTime @default(now()) @db.DateTime(0)
+  post_comment_postIDTopost   post     @relation("comment_postIDTopost", fields: [postID], references: [id], onDelete: Cascade, map: "comment_post_FK")
+  user                        user     @relation(fields: [authorID], references: [id], onDelete: Cascade, map: "comment_user_FK")
+  post_post_commentsTocomment post[]   @relation("post_commentsTocomment")
+}
+
+model post {
+  id                             String   @id @db.VarChar(100)
+  title                          String   @db.VarChar(100)
+  content                        String   @db.LongText
+  comments                       String?  @db.VarChar(32)
+  author                         String   @db.VarChar(100)
+  authorID                       String   @unique(map: "post_unique") @db.VarChar(100)
+  createdAt                      DateTime @default(now()) @db.DateTime(0)
+  updatedAt                      DateTime @default(now()) @db.DateTime(0)
+  comment_comment_postIDTopost   comment? @relation("comment_postIDTopost")
+  comment_post_commentsTocomment comment? @relation("post_commentsTocomment", fields: [comments], references: [id], onDelete: Cascade, map: "post_comment_FK")
+  user                           user     @relation(fields: [authorID], references: [id], onDelete: Cascade, map: "post_user_FK")
+
+  @@index([comments], map: "post_comment_FK")
+}

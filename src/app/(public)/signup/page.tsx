@@ -1,14 +1,14 @@
 'use client'
 
-import { useSignUp } from "@clerk/nextjs";
- 
+import userCreateDB from "@/components/userCreate/userCreateDB";
+
 import React, { ChangeEvent, useState} from 'react';
 import Image from 'next/image';
 
-import styles from '@/styles/Auth.module.css';
+import styles from '@/styles/Signup.module.css';
 
-import { signUpZodSchema } from '@/lib/signUpZodSchema';
-import { signUpType } from '@/lib/signUpType';
+import { signUpType } from '@/lib/signup/signUpType';
+import { signUpZodSchema } from '@/lib/signup/signUpZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 
@@ -18,14 +18,13 @@ type InputChangeEvent =
 
 const SignUp: React.FC = () => {
 
-    const { isLoaded, signUp } = useSignUp();
-
+    
     const [signUpData, setSignUpData] = useState<signUpType>({
         username: "",
         email: "",
         password: "",
         confirm: "",
-        race: "bat",
+        race: "bat"
     });
 
     const handleInputChange = (e: InputChangeEvent) => {
@@ -42,27 +41,16 @@ const SignUp: React.FC = () => {
             email: "",
             password: "",
             confirm: "",
-            race: "bat",
+            race: "bat"
         })
     };
 
-    const onClickSubmit = async (data: signUpType) => {
-        if (!isLoaded) {
-            return;
-        };
-
-        try {
-            // 'data' does not exist on type Partial...etc.
-            await signUp.create({
-                data.email,
-                data.password
-            });
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
     const [errors, setErrors] = useState<ValidationError<typeof signUpZodSchema>>({});
+
+    const onClickSubmit = (signupdata: signUpType) => {
+            userCreateDB(signupdata);
+            resetForm();
+    };
 
     const schemaParse = (data: signUpType) => {
         handleZodValidation({
@@ -79,7 +67,7 @@ const SignUp: React.FC = () => {
 
     return (
         <>
-            <main className={styles.main}>
+           <main className={styles.main}>
                 <div className={styles.form}>
                     {/* Labels */}
                     <div className={styles.labels}>
