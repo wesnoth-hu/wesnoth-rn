@@ -2,8 +2,8 @@
 
 import userLoginDB from "@/components/userLogin/userLoginDB";
 
-import type { loginType } from "@/lib/loginType";
-import { loginZodSchema } from '@/lib/loginZodSchema';
+import type { loginType } from "@/lib/login/loginType";
+import { loginZodSchema } from '@/lib/login/loginZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 

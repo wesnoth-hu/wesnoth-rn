@@ -15,9 +15,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import GetCookie from '@/components/Cookies/getCookie';
-import DeleteCookie from '@/components/Cookies/deleteCookie';
-
 import styles from '@/styles/Nav.module.css';
 
 
@@ -143,7 +140,7 @@ export default function Nav() {
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
                         <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
-                    <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookie(); router.push('/') }}>
+                    <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
                         <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
                 </>} */}

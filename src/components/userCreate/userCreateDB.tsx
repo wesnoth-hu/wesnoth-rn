@@ -1,7 +1,7 @@
 'use server'
 
 import { PrismaClient } from '@prisma/client';
-import { signUpType } from '@/lib/signUpType';
+import { signUpType } from '@/lib/signup/signUpType';
 import { nanoid } from 'nanoid';
 
 const bcrypt = require('bcrypt');
@@ -10,7 +10,7 @@ export default async function userCreateDB(signup:signUpType): Promise<void> {
 
     const prisma = new PrismaClient();
 
-    const userId = nanoid();
+    const userId = nanoid(24);
 
     await bcrypt.hash(signup.password, 8, async function (err:string, hash:string) {
         try {

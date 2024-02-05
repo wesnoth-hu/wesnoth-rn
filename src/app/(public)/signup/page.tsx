@@ -7,8 +7,8 @@ import Image from 'next/image';
 
 import styles from '@/styles/Signup.module.css';
 
-import { signUpType } from '@/lib/signUpType';
-import { signUpZodSchema } from '@/lib/signUpZodSchema';
+import { signUpType } from '@/lib/signup/signUpType';
+import { signUpZodSchema } from '@/lib/signup/signUpZodSchema';
 import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 

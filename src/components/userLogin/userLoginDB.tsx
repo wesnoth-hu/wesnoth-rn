@@ -1,6 +1,6 @@
 'use server'
 
-import { loginType } from '@/lib/loginType';
+import type { loginType } from '@/lib/login/loginType';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { nanoid } from 'nanoid';
