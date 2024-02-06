@@ -38,9 +38,11 @@ export default async function userLoginDB(login:loginType): Promise<void> {
                         sessionData: getCookie?.value as string
                     }
                 });
+
             }
         } catch (error) {
             redirect("/signin");
         }
 
+        await prisma.$disconnect();
 }

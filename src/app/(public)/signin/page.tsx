@@ -11,15 +11,14 @@ import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 
 import React, { ChangeEvent, useState } from 'react';
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import styles from '@/styles/Login.module.css';
 
 export default function Page() {
 
-    const { login } = useAuthStore();
-
-    const router = useRouter();
+    const handleLogin = useAuthStore((state) => state.login);
+    const { isAuthenticated } = useAuthStore();
 
     const [loginData, setLoginData] = useState<loginType>({
         email: "",
@@ -48,10 +47,13 @@ export default function Page() {
     const onClickLogin = async (logindata: loginType) => {
         try {
             await userLoginDB(logindata);
+            const userID = await GetUserID(logindata);
+            const sessionData = await GetCookie();
+            handleLogin(true, userID, sessionData);
             resetForm();
-            router.push('/account');
+            redirect('/account');
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -67,6 +69,10 @@ export default function Page() {
             schema: loginZodSchema,
         });
     };
+
+    if (isAuthenticated) {
+        redirect('/account');
+    }
 
     return (
         <>
@@ -111,13 +117,26 @@ export default function Page() {
                             autoComplete='on'
                             placeholder="********"
                         />
-                        <button type="submit" id={styles.register} onClick={() => { schemaParse(loginData) }}>Bejelentkezek</button>
+                        <button 
+                            type="submit" 
+                            id={styles.register} 
+                            onClick={() => { schemaParse(loginData) }}>
+                                Bejelentkezek
+                        </button>
                     </div>
                 </div>
                     <div className={styles.error}>
-                        {errors && errors.email && <div style={{ color: "red" }}>Email - {errors.email}</div>}
-                        {errors && errors.password && <div style={{ color: "red" }}>Jelszó - {errors.password}</div>}
-                        {errors && errors.confirm && <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}</div>}
+                        {errors && errors.email && 
+                            <div style={{ color: "red" }}>Email - {errors.email}
+                        </div>}
+                        
+                        {errors && errors.password && 
+                            <div style={{ color: "red" }}>Jelszó - {errors.password}
+                        </div>}
+                        
+                        {errors && errors.confirm && 
+                            <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}
+                        </div>}
                     </div>
             </main>
         </>
