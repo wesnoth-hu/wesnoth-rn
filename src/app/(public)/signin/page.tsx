@@ -1,6 +1,9 @@
 'use client'
 
 import userLoginDB from "@/components/userLogin/userLoginDB";
+import GetCookie from "@/lib/login/getCookie";
+import GetUserID from "@/lib/login/getuserID";
+import useAuthStore from "@/lib/zustand/authState";
 
 import type { loginType } from "@/lib/login/loginType";
 import { loginZodSchema } from '@/lib/login/loginZodSchema';
@@ -13,6 +16,8 @@ import { useRouter } from "next/navigation";
 import styles from '@/styles/Login.module.css';
 
 export default function Page() {
+
+    const { login } = useAuthStore();
 
     const router = useRouter();
 
