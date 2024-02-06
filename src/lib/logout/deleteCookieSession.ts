@@ -8,15 +8,15 @@ export default async function DeleteCookieSession(userID:string) : Promise<void>
     const prisma = new PrismaClient();
 
     try {
+        const cookieStore = cookies();
+
+        cookieStore.delete('userSessionID');
+
         await prisma.session.delete({
             where: {
                 userID: userID
             }
         });
-
-        const cookieStore = cookies();
-
-        cookieStore.delete('userSessionID');
 
     } catch (error) {
         console.error(error)
