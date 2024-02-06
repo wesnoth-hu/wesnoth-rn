@@ -1,6 +1,11 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+
+import useAuthStore from '@/lib/zustand/authState';
+import DeleteCookieSession from '@/lib/logout/deleteCookieSession';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faUser,
@@ -13,14 +18,14 @@ import {
     faTableList,
     faBars
 } from '@fortawesome/free-solid-svg-icons'
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+
 import styles from '@/styles/Nav.module.css';
 
 
 export default function Nav() {
 
-    const router = useRouter();
+    const { isAuthenticated, userID } = useAuthStore();
+    const handleLogout = useAuthStore((state) => state.logout);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -136,15 +141,15 @@ export default function Nav() {
     return (
         <>
             <div className={styles.nav}>
-                {/* {&& <>
+                {isAuthenticated && <>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
                         <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
-                    <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
-                        <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
+                    <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookieSession(userID); handleLogout() }}>
+                        <Link href="/" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
-                </>} */}
-                {<>
+                </>}
+                {!isAuthenticated && <>
                     <div className={styles.navitem}>
                         <Link href="/signin" className={styles.link}><FontAwesomeIcon icon={faArrowRightToBracket} size="sm" /> Bejelentkezés</Link>
                     </div>
@@ -167,15 +172,15 @@ export default function Nav() {
             </div>
 
             <div className={styles.shrunk995}>
-                {/* {(user) && <>
+                {isAuthenticated && <>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
                         <Link href="#" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
-                    <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
+                    <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookieSession(userID); handleLogout() }}>
                         <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
-                </>} */}
-                {<>
+                </>}
+                {!isAuthenticated && <>
                     <div className={styles.navitem}>
                         <Link href="/signin" className={styles.link} onClick={() => { setIsOpen(false) }}><FontAwesomeIcon icon={faArrowRightToBracket} size="sm" /> Bejelentkezés</Link>
                     </div>
@@ -215,15 +220,15 @@ export default function Nav() {
             {windowWidth < 650 && isOpen && <>
                 <div style={{ position: 'absolute', top: `${menuTopLeft.screenY}px`, left: `${menuTopLeft.screenX}px`, zIndex: 1 }} ref={dropdownRef650}>
                     <div className={styles.hamburgerMenu}>
-                        {/* {(user) && <>
+                        {isAuthenticated && <>
                             <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
                                 <Link href="#" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                             </div>
-                            <div className={styles.navitem} onClick={() => { setIsOpen(false); router.push('/') }}>
+                            <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookieSession(userID); handleLogout() }}>
                                 <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                             </div>
-                        </>} */}
-                        {<>
+                        </>}
+                        {!isAuthenticated && <>
                             <div className={styles.navitem}>
                                 <Link href="/signin" className={styles.link} onClick={() => { setIsOpen(false) }}><FontAwesomeIcon icon={faArrowRightToBracket} size="sm" /> Bejelentkezés</Link>
                             </div>

@@ -3,7 +3,10 @@ import { create } from "zustand";
 type AuthState = {
     isAuthenticated: boolean,
     userID: string,
-    sessionData: string
+    sessionData: string,
+
+    login: (isAuthenticated: boolean, userID: string, sessionData: string) => void,
+    logout: () => void
 }
 
 const useAuthStore = create<AuthState>()((set) => ({
@@ -11,8 +14,8 @@ const useAuthStore = create<AuthState>()((set) => ({
     userID: "",
     sessionData: "",
   
-    login: (userID:string, sessionData:string) =>
-      set(() => ({ isAuthenticated: true, userID: userID, sessionData: sessionData })),
+    login: (isAuthenticated: boolean, userID: string, sessionData: string) =>
+      set(() => ({ isAuthenticated: isAuthenticated, userID: userID, sessionData: sessionData })),
   
     logout: () =>
       set(() => ({ isAuthenticated: false, userID: "", sessionData: "" })),

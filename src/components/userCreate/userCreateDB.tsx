@@ -24,8 +24,10 @@ export default async function userCreateDB(signup:signUpType): Promise<void> {
                     emailVerified: false
                 }
             })
+
         } catch {
             console.log(err);
         }
     });
+    await prisma.$disconnect();
 }

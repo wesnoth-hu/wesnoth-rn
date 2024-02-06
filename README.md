@@ -11,3 +11,4 @@ Tech Stack:
 7. FontAwesome
 8. Zod
 9. TypeScript
+10. MySQL
