@@ -142,6 +142,7 @@ const SignUp: React.FC = () => {
                             <option value="dwarf" >Törpök</option>
                             <option value="troll" >Trollok</option>
                             <option value="elf" >Tündék</option>
+                            <option value="raven">Varjak</option>
                         </select>
                         <div className={styles.race}>
                             <Image
