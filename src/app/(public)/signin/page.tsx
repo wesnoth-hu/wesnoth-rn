@@ -72,8 +72,8 @@ export default function SignIn() {
         });
     };
 
-    if (isAuthenticated) {
-        router.push('/account');
+    if (!isAuthenticated) {
+        router.push('/');
     }
 
     return (
