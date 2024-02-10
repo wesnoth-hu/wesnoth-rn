@@ -11,14 +11,16 @@ import { ValidationError } from '@/lib/ZodError';
 import { handleZodValidation } from '@/lib/ZodError';
 
 import React, { ChangeEvent, useState } from 'react';
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import styles from '@/styles/Login.module.css';
 
-export default function Page() {
+export default function SignIn() {
 
     const handleLogin = useAuthStore((state) => state.login);
     const { isAuthenticated } = useAuthStore();
+
+    const router = useRouter();
 
     const [loginData, setLoginData] = useState<loginType>({
         email: "",
@@ -51,7 +53,7 @@ export default function Page() {
             const sessionData = await GetCookie();
             handleLogin(true, userID, sessionData);
             resetForm();
-            redirect('/account');
+            router.push('/account');
         } catch (error) {
             console.error(error);
         }
@@ -71,7 +73,7 @@ export default function Page() {
     };
 
     if (isAuthenticated) {
-        redirect('/account');
+        router.push('/account');
     }
 
     return (

@@ -2,9 +2,10 @@
 import { cookies } from 'next/headers';
 
 export default async function GetCookie() : Promise<string> {
+    
     const cookieStore = cookies();
 
-    const sessionData = cookieStore.get('userSessionID');
+    const sessionData = cookieStore.get('userSession');
 
     return sessionData?.value as string
 }

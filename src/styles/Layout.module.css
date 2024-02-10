@@ -19,7 +19,7 @@
 
 .logo {
   margin-top: 10px auto 0px auto;
-  /* width: 50%; */
+  width: auto;
   height: 215px;
   display: flex;
   flex-direction: row;
@@ -29,9 +29,8 @@
 
 .logoImg {
   margin: 20px auto 0px auto;
-  /* max-width: 415px; */
-  min-width: 300px;
-  max-height: 205px;
+  /* min-width: 300px;
+  max-height: 205px; */
   object-fit: contain;
 }
 

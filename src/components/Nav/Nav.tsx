@@ -174,10 +174,10 @@ export default function Nav() {
             <div className={styles.shrunk995}>
                 {isAuthenticated && <>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
-                        <Link href="#" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
+                        <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                     </div>
                     <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookieSession(userID); handleLogout() }}>
-                        <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
+                        <Link href="/" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                     </div>
                 </>}
                 {!isAuthenticated && <>
@@ -222,10 +222,10 @@ export default function Nav() {
                     <div className={styles.hamburgerMenu}>
                         {isAuthenticated && <>
                             <div className={styles.navitem} onClick={() => { setIsOpen(false) }}>
-                                <Link href="#" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
+                                <Link href="/account" className={styles.link} ><FontAwesomeIcon icon={faUser} size="sm" /> Adatlap</Link>
                             </div>
                             <div className={styles.navitem} onClick={() => { setIsOpen(false); DeleteCookieSession(userID); handleLogout() }}>
-                                <Link href="#" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
+                                <Link href="/" className={styles.link}><FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés</Link>
                             </div>
                         </>}
                         {!isAuthenticated && <>
