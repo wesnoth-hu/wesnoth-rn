@@ -7,14 +7,14 @@ import "./globals.css";
 import styles from "@/styles/Layout.module.css";
 
 import Nav from "@/components/Nav/Nav";
-import Footer from '@/components/Footer/Footer';
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Harc Wesnothért",
   description: "Magyar Wesnoth Közösségi Portál",
   icons: {
-    icon: '/favicon.ico',
-  }
+    icon: "/favicon.ico",
+  },
 };
 
 const ebg = localFont({
@@ -31,7 +31,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={ebg.className}>
         <main className={styles.main}>
-          
           <header>
             <div className={styles.fejlec}>
               <div className={styles.logo}>
@@ -42,7 +41,7 @@ export default function RootLayout({
                   height={210}
                   priority
                   className={styles.logoImg}
-                  />
+                />
               </div>
 
               <nav>
@@ -65,7 +64,6 @@ export default function RootLayout({
               <Footer />
             </div>
           </footer>
-
         </main>
       </body>
     </html>
