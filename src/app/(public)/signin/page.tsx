@@ -54,7 +54,7 @@ export default function SignIn() {
       const sessionData = await GetCookie();
       handleLogin(true, userID, sessionData);
       resetForm();
-      router.push("/account");
+      router.push(`/account/${userID}`);
     } catch (error) {
       console.error(error);
     }
@@ -72,10 +72,6 @@ export default function SignIn() {
       schema: loginZodSchema,
     });
   };
-
-  if (!isAuthenticated) {
-    router.push("/");
-  }
 
   return (
     <>

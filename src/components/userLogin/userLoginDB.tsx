@@ -7,6 +7,7 @@ import * as Iron from "@hapi/iron";
 import { PrismaClient } from "@prisma/client";
 import { User } from "@/lib/login/user";
 import { nanoid } from "nanoid";
+import { publicIpv4 } from "public-ip";
 const bcrypt = require("bcrypt");
 
 export default async function userLoginDB(login: loginType): Promise<void> {
@@ -18,6 +19,7 @@ export default async function userLoginDB(login: loginType): Promise<void> {
     const matched = await bcrypt.compare(login.password, passwordHash);
     const ironPass = process.env.IRON_SESSION_PW as string;
     const logmail = { email: login.email };
+    const userIP = await publicIpv4();
 
     if (matched) {
       const sealed = await Iron.seal(
@@ -39,6 +41,9 @@ export default async function userLoginDB(login: loginType): Promise<void> {
           id: nanoid(16) as string,
           userID: findUser?.id as string,
           sessionData: sealed as string,
+          loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
+          ip: userIP as string,
+          status: "active" as string,
         },
       });
     }

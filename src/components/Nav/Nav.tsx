@@ -155,7 +155,7 @@ export default function Nav() {
                 setIsOpen(false);
               }}
             >
-              <Link href="/account" className={styles.link}>
+              <Link href={`/account/${userID}`} className={styles.link}>
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>

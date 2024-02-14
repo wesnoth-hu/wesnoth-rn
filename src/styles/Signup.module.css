@@ -51,6 +51,10 @@
   margin-top: 25px;
 }
 
+.inputs > :is(.race) {
+  margin-top: 25px;
+}
+
 .race {
   display: flex;
   flex-direction: row;

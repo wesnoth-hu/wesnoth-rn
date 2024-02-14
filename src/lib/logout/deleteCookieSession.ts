@@ -11,9 +11,19 @@ export default async function DeleteCookieSession(
   const cookieStore = cookies();
 
   try {
-    await prisma.session.delete({
+    const sessionID = await prisma.session.findFirstOrThrow({
       where: {
         userID: userID,
+      },
+    });
+
+    await prisma.session.update({
+      where: {
+        id: sessionID.id,
+      },
+      data: {
+        logoutAt: new Date(), //.toISOString().slice(0, 19).replace("T", " "),
+        status: "loggedOut",
       },
     });
     cookieStore.delete("userSession");

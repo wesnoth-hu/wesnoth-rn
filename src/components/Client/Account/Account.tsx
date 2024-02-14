@@ -34,19 +34,33 @@ export default function Account({
 
   return (
     <>
-      <div>{userData.id}</div>
-      <div>{userData.email}</div>
-      <div>
-        <Image
-          src={`/race/${userData.race}.png`}
-          alt={`${userData.race}-icon`}
-          width={72}
-          height={72}
-        />
-      </div>
-      <div>{userData.username}</div>
-      <div>{userData.emailVerified}</div>
-      <div>{userData.createdAt.toString()}</div>
+      {isAuthenticated && userData && (
+        <>
+          <div>Felhasználó ID: {userData.id}</div>
+          <div>{userData.email}</div>
+          <div>
+            <Image
+              src={`/race/${userData?.race}.png`}
+              alt={`${userData?.race}-icon`}
+              width={72}
+              height={72}
+            />
+          </div>
+          <div>Felhasználónév: {userData.username}</div>
+          <div>
+            Email ellenőrizve: {userData.emailVerified ? "Igen" : "Nem"}
+          </div>
+          <div>
+            Regisztráció sátuma:{" "}
+            {userData.createdAt.toLocaleDateString("hu-HU", {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+        </>
+      )}
     </>
   );
 }

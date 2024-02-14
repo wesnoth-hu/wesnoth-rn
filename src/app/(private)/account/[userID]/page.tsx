@@ -35,8 +35,7 @@ export default async function Page() {
     }
   } catch (error) {
     console.error(error);
+    return redirect("/");
     //TODO send email notification to ADmin UI
   }
-
-  return redirect("/");
 }

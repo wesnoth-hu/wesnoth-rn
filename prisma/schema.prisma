@@ -8,35 +8,42 @@ datasource db {
 }
 
 model user {
-  id            String     @id @db.VarChar(100)
-  username      String     @db.VarChar(100)
-  email         String     @db.VarChar(100)
-  password      String     @db.VarChar(100)
+  id            String      @id @db.VarChar(100)
+  username      String      @db.VarChar(100)
+  email         String      @db.VarChar(100)
+  password      String      @db.VarChar(100)
   emailVerified Boolean
-  race          String     @db.VarChar(100)
+  race          String      @db.VarChar(100)
   money         Int?
-  createdAt     DateTime   @default(now()) @db.DateTime(0)
-  updatedAt     DateTime   @default(now()) @updatedAt @db.DateTime(0)
+  createdAt     DateTime    @default(now()) @db.DateTime(0)
+  updatedAt     DateTime    @default(now()) @updatedAt @db.DateTime(0)
   comment       comment?
   post          post?
-  savegames     savegames?
-  session       session?
+  savegames     savegames[]
+  session       session[]
 }
 
 model savegames {
   id         String   @id @db.VarChar(100)
-  userID     String   @unique(map: "savegames_unique") @db.VarChar(100)
+  userID     String   @db.VarChar(100)
   filename   String   @db.VarChar(100)
   uploadedAt DateTime @default(now()) @db.DateTime(0)
   user       user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "savegames_user_FK")
+
+  @@index([userID], map: "savegames_user_FK")
 }
 
 model session {
-  id          String   @id @db.VarChar(16)
-  userID      String   @unique(map: "session_unique") @db.VarChar(100)
-  sessionData String   @db.LongText
-  createdAT   DateTime @default(now()) @db.DateTime(0)
-  user        user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "session_user_FK")
+  id          String    @id @db.VarChar(16)
+  userID      String    @db.VarChar(16)
+  sessionData String    @db.VarChar(500)
+  loginAt     DateTime  @default(now()) @db.DateTime(0)
+  logoutAt    DateTime? @db.DateTime(0)
+  ip          String    @db.VarChar(100)
+  status      String    @db.VarChar(50)
+  user        user      @relation(fields: [userID], references: [id], onDelete: Cascade, map: "session_user_FK")
+
+  @@index([userID], map: "session_user_FK")
 }
 
 model comment {
