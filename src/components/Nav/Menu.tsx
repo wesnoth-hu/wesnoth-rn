@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import useAuthStore from "@/lib/zustand/authState";
-import DeleteCookieSession from "@/lib/logout/deleteCookieSession";
+import { UserContext } from "@/context/UserContextProvider/UserContext";
+import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
+
+import UpdateSession from "@/lib/logout/updateSession";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,13 +22,15 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "@/styles/Nav.module.css";
+import styles from "@/styles/Menu.module.css";
 
-export default function Nav() {
-  const { isAuthenticated, userID } = useAuthStore();
-  const handleLogout = useAuthStore((state) => state.logout);
+export default function Menu() {
+  const [isAuth, setIsAuth] = useContext(AuthContext);
+  const [user, setUser] = useContext(UserContext);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const handleMenuToggle = (event: any) => {
     event.stopPropagation();
@@ -147,7 +152,7 @@ export default function Nav() {
   return (
     <>
       <div className={styles.nav}>
-        {isAuthenticated && (
+        {isAuth && (
           <>
             <div
               className={styles.navitem}
@@ -155,16 +160,18 @@ export default function Nav() {
                 setIsOpen(false);
               }}
             >
-              <Link href={`/account/${userID}`} className={styles.link}>
+              <Link href={`/account/${user}`} className={styles.link}>
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
             <div
               className={styles.navitem}
-              onClick={() => {
+              onClick={async () => {
                 setIsOpen(false);
-                DeleteCookieSession(userID);
-                handleLogout();
+                await UpdateSession(user);
+                setIsAuth(false);
+                setUser("");
+                router.push("/");
               }}
             >
               <Link href="/" className={styles.link}>
@@ -174,7 +181,7 @@ export default function Nav() {
             </div>
           </>
         )}
-        {!isAuthenticated && (
+        {!isAuth && (
           <>
             <div className={styles.navitem}>
               <Link href="/signin" className={styles.link}>
@@ -212,7 +219,7 @@ export default function Nav() {
       </div>
 
       <div className={styles.shrunk995}>
-        {isAuthenticated && (
+        {isAuth && (
           <>
             <div
               className={styles.navitem}
@@ -220,16 +227,18 @@ export default function Nav() {
                 setIsOpen(false);
               }}
             >
-              <Link href="/account" className={styles.link}>
+              <Link href={`/account/${user}`} className={styles.link}>
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
             <div
               className={styles.navitem}
-              onClick={() => {
+              onClick={async () => {
                 setIsOpen(false);
-                DeleteCookieSession(userID);
-                handleLogout();
+                await UpdateSession(user);
+                setIsAuth(false);
+                setUser("");
+                router.push("/");
               }}
             >
               <Link href="/" className={styles.link}>
@@ -239,7 +248,7 @@ export default function Nav() {
             </div>
           </>
         )}
-        {!isAuthenticated && (
+        {!isAuth && (
           <>
             <div className={styles.navitem}>
               <Link
@@ -369,7 +378,7 @@ export default function Nav() {
             ref={dropdownRef650}
           >
             <div className={styles.hamburgerMenu}>
-              {isAuthenticated && (
+              {isAuth && (
                 <>
                   <div
                     className={styles.navitem}
@@ -377,16 +386,18 @@ export default function Nav() {
                       setIsOpen(false);
                     }}
                   >
-                    <Link href="/account" className={styles.link}>
+                    <Link href={`/account/${user}`} className={styles.link}>
                       <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
                     </Link>
                   </div>
                   <div
                     className={styles.navitem}
-                    onClick={() => {
+                    onClick={async () => {
                       setIsOpen(false);
-                      DeleteCookieSession(userID);
-                      handleLogout();
+                      await UpdateSession(user);
+                      setIsAuth(false);
+                      setUser("");
+                      router.push("/");
                     }}
                   >
                     <Link href="/" className={styles.link}>
@@ -399,7 +410,7 @@ export default function Nav() {
                   </div>
                 </>
               )}
-              {!isAuthenticated && (
+              {!isAuth && (
                 <>
                   <div className={styles.navitem}>
                     <Link

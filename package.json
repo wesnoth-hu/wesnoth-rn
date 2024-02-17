@@ -16,6 +16,11 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hapi/iron": "^7.0.1",
     "@prisma/client": "^5.9.1",
+    "@tanstack/react-query": "^5.20.5",
+    "@trpc/client": "^11.0.0-next-beta.289",
+    "@trpc/next": "^11.0.0-next-beta.289",
+    "@trpc/react-query": "^11.0.0-next-beta.289",
+    "@trpc/server": "^11.0.0-next-beta.289",
     "@warrantdev/react-warrant-js": "^2.0.0",
     "@warrantdev/warrant-node": "^6.1.0",
     "bcrypt": "^5.1.1",
@@ -24,8 +29,7 @@
     "public-ip": "^6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zod": "^3.22.4",
-    "zustand": "^4.5.0"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/hapi__iron": "^6.0.1",

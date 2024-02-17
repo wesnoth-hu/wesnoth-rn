@@ -7,6 +7,7 @@
   flex-direction: row;
   justify-content: center;
   gap: 22px;
+  cursor: default;
 }
 
 .navitem {
@@ -19,6 +20,7 @@
 .link {
   text-decoration: none;
   color: goldenrod;
+  cursor: pointer;
 }
 
 .link:hover {
@@ -28,12 +30,10 @@
 
 .shrunk995 {
   display: none;
-  cursor: pointer;
 }
 
 .shrunk650 {
   display: none;
-  cursor: pointer;
 }
 
 .menu995,
@@ -70,6 +70,10 @@
     flex-direction: row;
     justify-content: center;
     gap: 22px;
+    cursor: default;
+  }
+  .shrunk995 > .link {
+    cursor: pointer;
   }
 }
 
@@ -87,5 +91,9 @@
     flex-direction: row;
     justify-content: center;
     gap: 22px;
+    cursor: default;
+  }
+  .shrunk650 > .link {
+    cursor: pointer;
   }
 }

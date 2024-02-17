@@ -1,41 +1,64 @@
-import Account from "@/components/Client/Account/Account";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { PrismaClient } from "@prisma/client";
-import Iron from "@hapi/iron";
+"use client";
+
+import React, { useState, useEffect, useContext } from "react";
+import Image from "next/image";
+import FindUser from "@/components/Account/findUser";
+import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { User } from "@/lib/login/user";
 
-export default async function Page() {
-  const cookieStore = cookies();
-  const prisma = new PrismaClient();
-  const ironPass = process.env.IRON_SESSION_PW as string;
+export default function Account() {
+  const [isAuth, setIsAuth] = useContext(AuthContext);
 
-  try {
-    if (
-      cookieStore.get("userSession")?.value !== null ||
-      cookieStore.get("userSession")?.value !== undefined
-    ) {
-      const unsealed: string = await Iron.unseal(
-        `${cookieStore.get("userSession")?.value}`,
-        ironPass,
-        Iron.defaults
-      );
+  const [userData, setUserData] = useState<User>({
+    id: "",
+    username: "",
+    email: "",
+    emailVerified: false,
+    password: "",
+    race: "bat",
+    money: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
 
-      const findUser: User | null = await prisma.user.findFirst({
-        where: {
-          email: unsealed,
-        },
-      });
-
-      return (
-        <>
-          <Account cookie={true} user={findUser} />
-        </>
-      );
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await FindUser();
+      setUserData(user as User);
     }
-  } catch (error) {
-    console.error(error);
-    return redirect("/");
-    //TODO send email notification to ADmin UI
-  }
+    fetchUser();
+  }, []);
+
+  return (
+    <>
+      {isAuth && userData && (
+        <>
+          <div>Felhasználó ID: {userData.id}</div>
+          <div>{userData.email}</div>
+          <div>
+            <Image
+              src={`/race/${userData.race}.png`}
+              alt={`${userData.race}-icon`}
+              width={72}
+              height={72}
+              priority
+            />
+          </div>
+          <div>Felhasználónév: {userData.username}</div>
+          <div>
+            Email ellenőrizve: {userData.emailVerified ? "Igen" : "Nem"}
+          </div>
+          <div>
+            Regisztráció dátuma:{" "}
+            {userData.createdAt.toLocaleDateString("hu-HU", {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+        </>
+      )}
+    </>
+  );
 }

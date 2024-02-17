@@ -3,21 +3,23 @@
 import userLoginDB from "@/components/userLogin/userLoginDB";
 import GetCookie from "@/lib/login/getCookie";
 import GetUserID from "@/lib/login/getuserID";
-import useAuthStore from "@/lib/zustand/authState";
+import GetCookieState from "@/components/Server/getCookieState";
 
 import type { loginType } from "@/lib/login/loginType";
 import { loginZodSchema } from "@/lib/login/loginZodSchema";
 import { ValidationError } from "@/lib/ZodError";
 import { handleZodValidation } from "@/lib/ZodError";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "@/styles/Login.module.css";
+import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
+import { UserContext } from "@/context/UserContextProvider/UserContext";
 
 export default function SignIn() {
-  const handleLogin = useAuthStore((state) => state.login);
-  const { isAuthenticated } = useAuthStore();
+  const [isAuth, setIsAuth] = useContext(AuthContext);
+  const [user, setUser] = useContext(UserContext);
 
   const router = useRouter();
 
@@ -50,13 +52,14 @@ export default function SignIn() {
   const onClickLogin = async (logindata: loginType) => {
     try {
       await userLoginDB(logindata);
-      const userID = await GetUserID(logindata);
-      const sessionData = await GetCookie();
-      handleLogin(true, userID, sessionData);
+      const userID = await GetUserID();
+      setIsAuth(true);
+      setUser(userID);
       resetForm();
       router.push(`/account/${userID}`);
     } catch (error) {
-      console.error(error);
+      console.error("SignIn error: ", error);
+      // TODO send error notification to Admin UI
     }
   };
 

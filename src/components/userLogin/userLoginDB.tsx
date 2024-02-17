@@ -18,15 +18,11 @@ export default async function userLoginDB(login: loginType): Promise<void> {
     const passwordHash = await bcrypt.hash(login.password, 8);
     const matched = await bcrypt.compare(login.password, passwordHash);
     const ironPass = process.env.IRON_SESSION_PW as string;
-    const logmail = { email: login.email };
     const userIP = await publicIpv4();
+    const logmail = { email: login.email, userIP };
 
     if (matched) {
-      const sealed = await Iron.seal(
-        `${logmail.email}`,
-        ironPass,
-        Iron.defaults
-      );
+      const sealed = await Iron.seal(logmail, ironPass, Iron.defaults);
 
       cookieStore.set("userSession", sealed);
 
@@ -42,7 +38,6 @@ export default async function userLoginDB(login: loginType): Promise<void> {
           userID: findUser?.id as string,
           sessionData: sealed as string,
           loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
-          ip: userIP as string,
           status: "active" as string,
         },
       });
