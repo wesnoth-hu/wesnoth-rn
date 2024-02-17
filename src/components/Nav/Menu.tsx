@@ -20,6 +20,7 @@ import {
   faTrophy,
   faTableList,
   faBars,
+  faCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "@/styles/Menu.module.css";
@@ -216,6 +217,11 @@ export default function Menu() {
             <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
           </Link>
         </div>
+        <div className={styles.navitem}>
+          <Link href="#" className={styles.link}>
+            <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
+          </Link>
+        </div>
       </div>
 
       <div className={styles.shrunk995}>
@@ -338,6 +344,17 @@ export default function Menu() {
                   }}
                 >
                   <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
+                </Link>
+              </div>
+              <div className={styles.navitem}>
+                <Link
+                  href="#"
+                  className={styles.link}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
                 </Link>
               </div>
             </div>
@@ -469,6 +486,17 @@ export default function Menu() {
                   }}
                 >
                   <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
+                </Link>
+              </div>
+              <div className={styles.navitem}>
+                <Link
+                  href="#"
+                  className={styles.link}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
                 </Link>
               </div>
             </div>

@@ -18,6 +18,7 @@ model user {
   createdAt     DateTime    @default(now()) @db.DateTime(0)
   updatedAt     DateTime    @default(now()) @updatedAt @db.DateTime(0)
   comment       comment[]
+  error_log     error_log[]
   post          post[]
   savegames     savegames[]
   session       session[]
@@ -66,10 +67,23 @@ model post {
   content                      String    @db.LongText
   author                       String    @db.VarChar(100)
   authorID                     String    @db.VarChar(16)
+  published                    Boolean   @default(false)
+  draft                        Boolean   @default(true)
   createdAt                    DateTime  @default(now()) @db.DateTime(0)
   updatedAt                    DateTime  @default(now()) @db.DateTime(0)
   comment_comment_postIDTopost comment[] @relation("comment_postIDTopost")
   user                         user      @relation(fields: [authorID], references: [id], onDelete: Cascade, map: "post_user_FK")
 
   @@index([authorID], map: "post_user_FK")
+}
+
+model error_log {
+  id         String   @id @db.VarChar(16)
+  userID     String   @db.VarChar(16)
+  errortype  String   @db.VarChar(200)
+  failedData String   @db.VarChar(1200)
+  createdAt  DateTime @default(now()) @db.Timestamp(0)
+  user       user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "failedlogin_user_FK")
+
+  @@index([userID], map: "failedlogin_user_FK")
 }

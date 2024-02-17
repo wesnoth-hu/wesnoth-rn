@@ -1,7 +1,7 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
-import Iron from "@hapi/iron";
+import Iron, { decrypt } from "@hapi/iron";
 import { UnsealObject } from "@/components/Account/unsealed";
 
 export default async function GetUserID(): Promise<string> {
@@ -9,9 +9,11 @@ export default async function GetUserID(): Promise<string> {
 
   const cookieStore = cookies();
 
+  const IronPass: string = process.env.IRON_SESSION_PW as string;
+
   const unsealed: UnsealObject = await Iron.unseal(
     cookieStore.get("userSession")?.value as string,
-    `${process.env.IRON_SESSION_PW}`,
+    IronPass,
     Iron.defaults
   ); // unseales cookie to extract data
 

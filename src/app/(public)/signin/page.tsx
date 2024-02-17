@@ -1,9 +1,7 @@
 "use client";
 
 import userLoginDB from "@/components/userLogin/userLoginDB";
-import GetCookie from "@/lib/login/getCookie";
 import GetUserID from "@/lib/login/getuserID";
-import GetCookieState from "@/components/Server/getCookieState";
 
 import type { loginType } from "@/lib/login/loginType";
 import { loginZodSchema } from "@/lib/login/loginZodSchema";
@@ -45,21 +43,33 @@ export default function SignIn() {
     });
   };
 
+  const resetPass = () => {
+    setLoginData({
+      email: loginData.email,
+      password: "",
+      confirm: "",
+    });
+  };
+
   const [errors, setErrors] = useState<ValidationError<typeof loginZodSchema>>(
     {}
   );
 
+  const [invalidPass, setInvalidPass] = useState<string>("");
+
   const onClickLogin = async (logindata: loginType) => {
-    try {
-      await userLoginDB(logindata);
+    const loginSuccess = await userLoginDB(logindata);
+
+    if (loginSuccess === false) {
+      resetPass();
+      setInvalidPass("Sikertelen bejelentkezés. Próbáld meg újra!");
+      return;
+    } else {
       const userID = await GetUserID();
       setIsAuth(true);
       setUser(userID);
       resetForm();
       router.push(`/account/${userID}`);
-    } catch (error) {
-      console.error("SignIn error: ", error);
-      // TODO send error notification to Admin UI
     }
   };
 
@@ -140,6 +150,9 @@ export default function SignIn() {
 
           {errors && errors.confirm && (
             <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}</div>
+          )}
+          {invalidPass !== "" && (
+            <div style={{ color: "red" }}>{invalidPass}</div>
           )}
         </div>
       </main>
