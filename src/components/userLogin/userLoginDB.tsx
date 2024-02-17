@@ -1,14 +1,12 @@
 "use server";
 
 import type { loginType } from "@/lib/login/loginType";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import * as Iron from "@hapi/iron";
 import { PrismaClient } from "@prisma/client";
 import { User } from "@/lib/login/user";
 import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
-import { match } from "assert";
 const bcrypt = require("bcrypt");
 
 export default async function userLoginDB(login: loginType): Promise<boolean> {
@@ -32,7 +30,7 @@ export default async function userLoginDB(login: loginType): Promise<boolean> {
 
     cookieStore.set("userSession", sealed);
 
-    const findUser: User | null = await prisma.user.findFirst({
+    const findUser: User = await prisma.user.findFirst({
       where: {
         email: login.email,
       },
