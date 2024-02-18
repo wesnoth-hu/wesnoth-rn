@@ -26,6 +26,8 @@ export default async function FindUser(): Promise<User> {
       },
     });
 
+    await prisma.$disconnect();
+
     return findUser as User;
   } else {
     redirect("/");

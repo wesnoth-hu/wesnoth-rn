@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hapi/iron": "^7.0.1",
     "@prisma/client": "^5.9.1",
+    "@tanstack/react-query": "^5.21.7",
     "@warrantdev/react-warrant-js": "^2.0.0",
     "@warrantdev/warrant-node": "^6.1.0",
     "bcrypt": "^5.1.1",
@@ -27,6 +28,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.20.1",
     "@types/hapi__iron": "^6.0.1",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.55",
