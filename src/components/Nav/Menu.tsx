@@ -39,7 +39,7 @@ export default function Menu() {
   };
 
   // dropdown menu reference
-  const dropdownRef995 = useRef<HTMLDivElement>(null);
+  const dropdownRef1150 = useRef<HTMLDivElement>(null);
   const dropdownRef650 = useRef<HTMLDivElement>(null);
 
   // state to store Menu icon Top and Left coordinates
@@ -63,7 +63,7 @@ export default function Menu() {
 
     window.addEventListener("resize", handleResize);
 
-    if (typeof window !== "undefined" && windowWidth > 995) {
+    if (typeof window !== "undefined" && windowWidth > 1150) {
       setIsOpen(false);
     }
 
@@ -75,19 +75,19 @@ export default function Menu() {
   // useEffect to return Menu icon's coordinates for dropdown menu rendering
   useEffect(() => {
     // define menuIcon div element for 650 and 980 pixels
-    const menuIcon995 = document.getElementById("menuRoot995");
+    const menuIcon1150 = document.getElementById("menuRoot1150");
     const menuIcon650 = document.getElementById("menuRoot650");
 
     // existence check
-    if (!(menuIcon995 || menuIcon650)) {
+    if (!(menuIcon1150 || menuIcon650)) {
       return;
     }
 
     // put dropdown menu to calculated coordinates between 650 and 980 pixels
-    const iconRect995 = menuIcon995?.getBoundingClientRect();
-    const iconLeft995 = iconRect995?.left! + window.scrollX + 175;
-    const newTop995 = iconRect995?.bottom! + window.scrollY + 10;
-    setMenuTopLeft({ screenY: newTop995, screenX: iconLeft995 });
+    const iconRect1150 = menuIcon1150?.getBoundingClientRect();
+    const iconLeft1150 = iconRect1150?.left! + window.scrollX + 175;
+    const newTop1150 = iconRect1150?.bottom! + window.scrollY + 10;
+    setMenuTopLeft({ screenY: newTop1150, screenX: iconLeft1150 });
 
     // put dropdown menu to claculated coordinates for 650 and lower pixels
     const iconRect650 = menuIcon650?.getBoundingClientRect();
@@ -96,8 +96,8 @@ export default function Menu() {
     setMenuTopLeft({ screenY: newTop650, screenX: iconLeft650 });
 
     // move dropdown menu on resize between 650 and 980 pixels
-    const handleResize995 = () => {
-      const iconRect = menuIcon995?.getBoundingClientRect();
+    const handleResize1150 = () => {
+      const iconRect = menuIcon1150?.getBoundingClientRect();
       const iconleft = iconRect?.right! - window.scrollX - 175;
       const newTop = iconRect?.bottom! + window.scrollY + 10;
       setMenuTopLeft({ screenY: newTop, screenX: iconleft });
@@ -112,8 +112,8 @@ export default function Menu() {
     };
 
     if (windowWidth >= 650) {
-      handleResize995();
-      window.addEventListener("resize", handleResize995);
+      handleResize1150();
+      window.addEventListener("resize", handleResize1150);
     }
 
     if (windowWidth < 650) {
@@ -122,7 +122,7 @@ export default function Menu() {
     }
 
     return () => {
-      window.removeEventListener("resize", handleResize995);
+      window.removeEventListener("resize", handleResize1150);
       window.removeEventListener("resize", handleResize650);
     };
   }, [windowWidth]);
@@ -130,8 +130,8 @@ export default function Menu() {
   // auto-close dorpdown menu if clicks are outside of dropdown menu context
   const handleClickOutside = (event: any) => {
     if (
-      (dropdownRef995.current &&
-        !dropdownRef995.current.contains(event.target)) ||
+      (dropdownRef1150.current &&
+        !dropdownRef1150.current.contains(event.target)) ||
       (dropdownRef650 && !dropdownRef650.current?.contains(event.target))
     ) {
       setIsOpen(false);
@@ -224,7 +224,7 @@ export default function Menu() {
         </div>
       </div>
 
-      <div className={styles.shrunk995}>
+      <div className={styles.shrunk1150}>
         {isAuth && (
           <>
             <div
@@ -293,15 +293,15 @@ export default function Menu() {
           </Link>
         </div>
         <div
-          id="menuRoot995"
-          className={styles.menu995}
+          id="menuRoot1150"
+          className={styles.menu1150}
           onClick={handleMenuToggle}
         >
           <FontAwesomeIcon icon={faBars} size="sm" /> Menü
         </div>
       </div>
 
-      {windowWidth > 650 && windowWidth < 995 && isOpen && (
+      {windowWidth > 650 && windowWidth < 1150 && isOpen && (
         <>
           <div
             style={{
@@ -310,7 +310,7 @@ export default function Menu() {
               left: `${menuTopLeft.screenX}px`,
               zIndex: 1,
             }}
-            ref={dropdownRef995}
+            ref={dropdownRef1150}
           >
             <div className={styles.hamburgerMenu}>
               <div className={styles.navitem}>

@@ -28,7 +28,7 @@
   color: darkgoldenrod;
 }
 
-.shrunk995 {
+.shrunk1150 {
   display: none;
 }
 
@@ -36,14 +36,14 @@
   display: none;
 }
 
-.menu995,
+.menu1150,
 .menu650 {
   color: goldenrod;
   font-size: 1.5rem;
   font-weight: 550;
 }
 
-.menu995:hover,
+.menu1150:hover,
 .menu650:hover {
   color: darkgoldenrod;
 }
@@ -59,11 +59,11 @@
   background-color: #dad1a0;
 }
 
-@media (max-width: 995px) {
+@media (max-width: 1150px) {
   .nav {
     display: none;
   }
-  .shrunk995 {
+  .shrunk1150 {
     padding-top: 10px;
     width: 100%;
     display: flex;
@@ -72,7 +72,7 @@
     gap: 22px;
     cursor: default;
   }
-  .shrunk995 > .link {
+  .shrunk1150 > .link {
     cursor: pointer;
   }
 }
@@ -81,7 +81,7 @@
   .nav {
     display: none;
   }
-  .shrunk995 {
+  .shrunk1150 {
     display: none;
   }
   .shrunk650 {
