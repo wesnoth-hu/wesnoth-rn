@@ -22,6 +22,8 @@ export default function Account() {
     updatedAt: new Date(),
   });
 
+  // TODO replace this with React Query to avoid staleness
+  // TODO enable caching
   useEffect(() => {
     async function fetchUser() {
       const user = await FindUser();
