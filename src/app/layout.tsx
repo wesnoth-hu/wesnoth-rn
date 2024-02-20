@@ -12,7 +12,6 @@ import Menu from "@/components/Nav/Menu";
 import Footer from "@/components/Footer/Footer";
 
 import AuthProvider from "@/context/AuthContextProvider/AuthProvider";
-import UserProvider from "@/context/UserContextProvider/UserProvider";
 import SessionProvider from "@/context/SessionContextProvider/SessionProvider";
 
 export const metadata: Metadata = {
@@ -37,47 +36,45 @@ export default function RootLayout({
     <ReactQueryProvider>
       <SessionProvider>
         <AuthProvider>
-          <UserProvider>
-            <html lang="en">
-              <body className={ebg.className}>
-                <main className={styles.main}>
-                  <header>
-                    <div className={styles.fejlec}>
-                      <div className={styles.logo}>
-                        <Image
-                          src="/logo-hu.png"
-                          alt="Hungarian Wesnoth Logo"
-                          width={415}
-                          height={210}
-                          priority
-                          className={styles.logoImg}
-                        />
-                      </div>
-
-                      <nav>
-                        <Menu />
-                      </nav>
+          <html lang="en">
+            <body className={ebg.className}>
+              <main className={styles.main}>
+                <header>
+                  <div className={styles.fejlec}>
+                    <div className={styles.logo}>
+                      <Image
+                        src="/logo-hu.png"
+                        alt="Hungarian Wesnoth Logo"
+                        width={415}
+                        height={210}
+                        priority
+                        className={styles.logoImg}
+                      />
                     </div>
-                  </header>
 
-                  <section>
-                    <div className={styles.tartkozep}>
-                      {/*Aside Left*/}
-                      <div className={styles.sideProfile}>Side</div>
-                      {/*Section*/}
-                      <div className={styles.kozep}>{children}</div>
-                    </div>
-                  </section>
+                    <nav>
+                      <Menu />
+                    </nav>
+                  </div>
+                </header>
 
-                  <footer>
-                    <div className={styles.lablec}>
-                      <Footer />
-                    </div>
-                  </footer>
-                </main>
-              </body>
-            </html>
-          </UserProvider>
+                <section>
+                  <div className={styles.tartkozep}>
+                    {/*Aside Left*/}
+                    <div className={styles.sideProfile}>Side</div>
+                    {/*Section*/}
+                    <div className={styles.kozep}>{children}</div>
+                  </div>
+                </section>
+
+                <footer>
+                  <div className={styles.lablec}>
+                    <Footer />
+                  </div>
+                </footer>
+              </main>
+            </body>
+          </html>
         </AuthProvider>
       </SessionProvider>
     </ReactQueryProvider>

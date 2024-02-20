@@ -1,5 +1,7 @@
 "use client";
 
+import { publicIpv4 } from "public-ip";
+
 import userLoginDB from "@/components/userLogin/userLoginDB";
 import GetUserID from "@/lib/login/getuserID";
 
@@ -13,11 +15,12 @@ import { useRouter } from "next/navigation";
 
 import styles from "@/styles/Login.module.css";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
-import { UserContext } from "@/context/UserContextProvider/UserContext";
+import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
+import GetSessionCookie from "@/components/Server/getSessionCookie";
 
 export default function SignIn() {
   const [isAuth, setIsAuth] = useContext(AuthContext);
-  const [user, setUser] = useContext(UserContext);
+  const [session, setSession] = useContext(SessionContext);
 
   const router = useRouter();
 
@@ -59,6 +62,7 @@ export default function SignIn() {
 
   const onClickLogin = async (logindata: loginType) => {
     const loginSuccess = await userLoginDB(logindata);
+    const sessionCookie = await GetSessionCookie();
 
     if (loginSuccess === false) {
       resetPass();
@@ -67,7 +71,7 @@ export default function SignIn() {
     } else {
       const userID = await GetUserID();
       setIsAuth(true);
-      setUser(userID);
+      setSession(sessionCookie as string);
       resetForm();
       router.push(`/account/${userID}`);
     }

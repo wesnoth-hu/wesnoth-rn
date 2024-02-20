@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import * as Iron from "@hapi/iron";
 
-import { UserContext } from "@/context/UserContextProvider/UserContext";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
+import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
 
 import UpdateSession from "@/lib/logout/updateSession";
 
@@ -24,12 +25,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "@/styles/Menu.module.css";
+import { UnsealObject } from "../Account/unsealed";
+import SessionData from "../Server/sessionData";
 
 export default function Menu() {
   const [isAuth, setIsAuth] = useContext(AuthContext);
-  const [user, setUser] = useContext(UserContext);
+  const [session, setSession] = useContext(SessionContext);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [unseal, setUnseal] = useState<{
+    userID: string;
+    email: string;
+    userIP: string;
+    randomNano: string;
+  }>({
+    userID: "",
+    email: "",
+    userIP: "",
+    randomNano: "",
+  });
 
   const router = useRouter();
 
@@ -52,6 +66,21 @@ export default function Menu() {
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
+
+  useEffect(() => {
+    async function fetchData() {
+      const unsealed = await SessionData(session);
+
+      setUnseal((prevSeal) => ({
+        ...prevSeal,
+        userID: unsealed.userID,
+        email: unsealed.email,
+        userIP: unsealed.userIP,
+        randomNano: unsealed.randomNano,
+      }));
+    }
+    fetchData();
+  }, []);
 
   // useeffect to auto-close dropdown menu at specific width
   useEffect(() => {
@@ -161,7 +190,7 @@ export default function Menu() {
                 setIsOpen(false);
               }}
             >
-              <Link href={`/account/${user}`} className={styles.link}>
+              <Link href={`/account/${unseal.userID}`} className={styles.link}>
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
@@ -169,9 +198,15 @@ export default function Menu() {
               className={styles.navitem}
               onClick={async () => {
                 setIsOpen(false);
-                await UpdateSession(user);
+                await UpdateSession(unseal.userID);
                 setIsAuth(false);
-                setUser("");
+                setSession("");
+                setUnseal({
+                  userID: "",
+                  email: "",
+                  userIP: "",
+                  randomNano: "",
+                });
                 router.push("/");
               }}
             >
@@ -233,7 +268,7 @@ export default function Menu() {
                 setIsOpen(false);
               }}
             >
-              <Link href={`/account/${user}`} className={styles.link}>
+              <Link href={`/account/${unseal.userID}`} className={styles.link}>
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
@@ -241,9 +276,15 @@ export default function Menu() {
               className={styles.navitem}
               onClick={async () => {
                 setIsOpen(false);
-                await UpdateSession(user);
+                await UpdateSession(unseal.userID);
                 setIsAuth(false);
-                setUser("");
+                setSession("");
+                setUnseal({
+                  userID: "",
+                  email: "",
+                  userIP: "",
+                  randomNano: "",
+                });
                 router.push("/");
               }}
             >
@@ -403,7 +444,10 @@ export default function Menu() {
                       setIsOpen(false);
                     }}
                   >
-                    <Link href={`/account/${user}`} className={styles.link}>
+                    <Link
+                      href={`/account/${unseal.userID}`}
+                      className={styles.link}
+                    >
                       <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
                     </Link>
                   </div>
@@ -411,9 +455,15 @@ export default function Menu() {
                     className={styles.navitem}
                     onClick={async () => {
                       setIsOpen(false);
-                      await UpdateSession(user);
+                      await UpdateSession(unseal.userID);
                       setIsAuth(false);
-                      setUser("");
+                      setSession("");
+                      setUnseal({
+                        userID: "",
+                        email: "",
+                        userIP: "",
+                        randomNano: "",
+                      });
                       router.push("/");
                     }}
                   >
