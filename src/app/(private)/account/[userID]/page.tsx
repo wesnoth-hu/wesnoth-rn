@@ -10,8 +10,8 @@ import { SessionContext } from "@/context/SessionContextProvider/SessionContext"
 import { User } from "@/lib/login/user";
 
 export default function Account() {
-  const [isAuth, setIsAuth] = useContext(AuthContext);
-  const [session, setSession] = useContext(SessionContext);
+  const [isAuth] = useContext(AuthContext);
+  const [session] = useContext(SessionContext);
 
   const [userData, setUserData] = useState<User>({
     id: "",
@@ -61,7 +61,7 @@ export default function Account() {
       const user = await FindUser(unseal.userID as string);
       setUserData(user as User);
     }
-    if (!!session) {
+    if (session !== "") {
       fetchUser();
     }
   }, [session, unseal]);

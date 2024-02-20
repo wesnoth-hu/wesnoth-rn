@@ -1,6 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-
-import { publicIpv4 } from "public-ip";
 
 import userLoginDB from "@/components/userLogin/userLoginDB";
 import GetUserID from "@/lib/login/getuserID";

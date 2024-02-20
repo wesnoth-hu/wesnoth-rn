@@ -1,9 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  MouseEvent,
+} from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import * as Iron from "@hapi/iron";
 
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
@@ -25,7 +30,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "@/styles/Menu.module.css";
-import { UnsealObject } from "../Account/unsealed";
 import SessionData from "../Server/sessionData";
 
 export default function Menu() {
@@ -47,7 +51,7 @@ export default function Menu() {
 
   const router = useRouter();
 
-  const handleMenuToggle = (event: any) => {
+  const handleMenuToggle = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
   };
@@ -115,30 +119,30 @@ export default function Menu() {
     }
 
     // put dropdown menu to calculated coordinates between 650 and 980 pixels
-    const iconRect1150 = menuIcon1150?.getBoundingClientRect();
-    const iconLeft1150 = iconRect1150?.left! + window.scrollX + 175;
-    const newTop1150 = iconRect1150?.bottom! + window.scrollY + 10;
+    const iconRect1150 = menuIcon1150!.getBoundingClientRect();
+    const iconLeft1150 = iconRect1150.left! + window.scrollX + 175;
+    const newTop1150 = iconRect1150.bottom! + window.scrollY + 10;
     setMenuTopLeft({ screenY: newTop1150, screenX: iconLeft1150 });
 
     // put dropdown menu to claculated coordinates for 650 and lower pixels
-    const iconRect650 = menuIcon650?.getBoundingClientRect();
-    const iconLeft650 = iconRect650?.left! + window.scrollX + 175;
-    const newTop650 = iconRect650?.bottom! + window.scrollY + 10;
+    const iconRect650 = menuIcon650!.getBoundingClientRect();
+    const iconLeft650 = iconRect650.left! + window.scrollX + 175;
+    const newTop650 = iconRect650.bottom! + window.scrollY + 10;
     setMenuTopLeft({ screenY: newTop650, screenX: iconLeft650 });
 
     // move dropdown menu on resize between 650 and 980 pixels
     const handleResize1150 = () => {
-      const iconRect = menuIcon1150?.getBoundingClientRect();
-      const iconleft = iconRect?.right! - window.scrollX - 175;
-      const newTop = iconRect?.bottom! + window.scrollY + 10;
+      const iconRect = menuIcon1150!.getBoundingClientRect();
+      const iconleft = iconRect.right! - window.scrollX - 175;
+      const newTop = iconRect.bottom! + window.scrollY + 10;
       setMenuTopLeft({ screenY: newTop, screenX: iconleft });
     };
 
     // move dropdown menu on resize between for 650 and lower pixels
     const handleResize650 = () => {
-      const iconRect = menuIcon650?.getBoundingClientRect();
-      const iconleft = iconRect?.right! - window.scrollX - 175;
-      const newTop = iconRect?.bottom! + window.scrollY + 10;
+      const iconRect = menuIcon650!.getBoundingClientRect();
+      const iconleft = iconRect.right! - window.scrollX - 175;
+      const newTop = iconRect.bottom! + window.scrollY + 10;
       setMenuTopLeft({ screenY: newTop, screenX: iconleft });
     };
 
@@ -159,11 +163,14 @@ export default function Menu() {
   }, [windowWidth]);
 
   // auto-close dorpdown menu if clicks are outside of dropdown menu context
-  const handleClickOutside = (event: any) => {
+  const handleClickOutside: EventListenerOrEventListenerObject = (
+    event: MouseEvent<HTMLDivElement>
+  ) => {
     if (
       (dropdownRef1150.current &&
-        !dropdownRef1150.current.contains(event.target)) ||
-      (dropdownRef650 && !dropdownRef650.current?.contains(event.target))
+        !dropdownRef1150.current.contains(event.target as Node)) ||
+      (dropdownRef650 &&
+        !dropdownRef650.current?.contains(event.target as Node))
     ) {
       setIsOpen(false);
     }
