@@ -69,7 +69,7 @@ export default function Menu() {
 
   useEffect(() => {
     async function fetchData() {
-      const unsealed = await SessionData(session);
+      const unsealed = await SessionData();
 
       setUnseal((prevSeal) => ({
         ...prevSeal,
@@ -79,8 +79,10 @@ export default function Menu() {
         randomNano: unsealed.randomNano,
       }));
     }
-    fetchData();
-  }, []);
+    if (session !== "" && isAuth === true) {
+      fetchData();
+    }
+  }, [isAuth, session]);
 
   // useeffect to auto-close dropdown menu at specific width
   useEffect(() => {

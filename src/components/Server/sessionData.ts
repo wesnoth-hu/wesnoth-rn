@@ -1,11 +1,10 @@
 "use server";
 
-import { prisma } from "@/lib/prisma/client";
 import { UnsealObject } from "@/components/Account/unsealed";
 import * as Iron from "@hapi/iron";
 import GetSessionCookie from "./getSessionCookie";
 
-export default async function SessionData(session: string): Promise<{
+export default async function SessionData(): Promise<{
   userID: string;
   email: string;
   userIP: string;
@@ -13,10 +12,19 @@ export default async function SessionData(session: string): Promise<{
 }> {
   const ironPass = process.env.IRON_SESSION_PW as string;
   const sessionCookie = await GetSessionCookie();
-  const unsealed: UnsealObject = await Iron.unseal(
-    sessionCookie as string,
-    ironPass,
-    Iron.defaults
-  );
-  return unsealed;
+  try {
+    const unsealed: UnsealObject = await Iron.unseal(
+      sessionCookie as string,
+      ironPass,
+      Iron.defaults
+    );
+    return unsealed as UnsealObject;
+  } catch (error) {
+    return {
+      userID: "",
+      email: "",
+      userIP: "",
+      randomNano: "",
+    };
+  }
 }

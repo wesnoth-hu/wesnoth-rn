@@ -8,12 +8,7 @@ export default function SessionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [session, setSession] = useState<{
-    userID: string;
-    email: string;
-    userIP: string;
-    randomNano: string;
-  }>({ userID: "", email: "", userIP: "", randomNano: "" });
+  const [session, setSession] = useState<string>("");
 
   return (
     <SessionContext.Provider value={[session, setSession]}>

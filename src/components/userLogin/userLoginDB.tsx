@@ -3,14 +3,13 @@
 import type { loginType } from "@/lib/login/loginType";
 import { cookies } from "next/headers";
 import * as Iron from "@hapi/iron";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma/client";
 import { User } from "@/lib/login/user";
 import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
 const bcrypt = require("bcrypt");
 
 export default async function userLoginDB(login: loginType): Promise<boolean> {
-  const prisma = new PrismaClient();
   const cookieStore = cookies();
   const dbSessionID = nanoid(16);
 

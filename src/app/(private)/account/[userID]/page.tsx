@@ -3,13 +3,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import FindUser from "@/components/Account/findUser";
-import Iron from "@hapi/iron";
+import SessionData from "@/components/Server/sessionData";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
 import { User } from "@/lib/login/user";
-import { UnsealObject } from "@/components/Account/unsealed";
-import SessionData from "@/components/Server/sessionData";
 
 export default function Account() {
   const [isAuth, setIsAuth] = useContext(AuthContext);
@@ -41,7 +39,7 @@ export default function Account() {
 
   useEffect(() => {
     async function fetchData() {
-      const unsealed = await SessionData(session);
+      const unsealed = await SessionData();
 
       setUnseal((prevSeal) => ({
         ...prevSeal,
@@ -51,15 +49,25 @@ export default function Account() {
         randomNano: unsealed.randomNano,
       }));
     }
-    fetchData();
-  }, []);
+    if (isAuth === true && session !== "") {
+      fetchData();
+    }
+  }, [isAuth, session]);
 
   // TODO replace this with React Query to avoid staleness
   // TODO enable caching
   useEffect(() => {
     async function fetchUser() {
-      const user = await FindUser(unseal?.userID as string);
+      const user = await FindUser(unseal.userID as string);
       setUserData(user as User);
+    }
+    if (!!session) {
+      fetchUser();
+    }
+  }, [session, unseal]);
+
+  useEffect(() => {
+    if (isAuth === false) {
       setUnseal({
         userID: "",
         email: "",
@@ -67,15 +75,11 @@ export default function Account() {
         randomNano: "",
       });
     }
-    fetchUser();
-  }, [unseal]);
-
-  console.log("Session: ", session);
-  console.log("Unseal: ", unseal);
+  }, [isAuth, setUnseal]);
 
   return (
     <>
-      {isAuth && userData && (
+      {isAuth && session && userData && (
         <>
           <div>Felhasználó ID: {userData.id}</div>
           <div>{userData.email}</div>
