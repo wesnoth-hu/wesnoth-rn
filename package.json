@@ -17,6 +17,8 @@
     "@hapi/iron": "^7.0.1",
     "@prisma/client": "^5.9.1",
     "@tanstack/react-query": "^5.21.7",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "@warrantdev/react-warrant-js": "^2.0.0",
     "@warrantdev/warrant-node": "^6.1.0",
     "bcrypt": "^5.1.1",
