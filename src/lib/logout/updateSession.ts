@@ -1,10 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../prisma/client";
 
 export default async function UpdateSession(ID: string): Promise<void> {
-  const prisma = new PrismaClient();
   const cookieStore = cookies();
 
   try {
