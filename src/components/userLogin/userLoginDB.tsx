@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 "use server";
 
 import type { loginType } from "@/lib/login/loginType";

@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/lib/prisma/client";
-
 import { User } from "@/lib/login/user";
 
 export default async function FindUser(ID: string): Promise<User> {

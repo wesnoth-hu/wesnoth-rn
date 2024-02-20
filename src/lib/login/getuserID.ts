@@ -1,12 +1,10 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../prisma/client";
 import { cookies } from "next/headers";
-import Iron, { decrypt } from "@hapi/iron";
+import Iron from "@hapi/iron";
 import { UnsealObject } from "@/components/Account/unsealed";
 
 export default async function GetUserID(): Promise<string> {
-  const prisma = new PrismaClient();
-
   const cookieStore = cookies();
 
   const IronPass: string = process.env.IRON_SESSION_PW as string;
