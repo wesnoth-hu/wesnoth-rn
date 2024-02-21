@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 "use server";
 
-import type { loginType } from "@/lib/login/loginType";
+import type { loginEmailType } from "@/lib/login/loginEmailType";
+import type { loginUserType } from "@/lib/login/loginUserType";
 import { cookies } from "next/headers";
 import * as Iron from "@hapi/iron";
 import { prisma } from "@/lib/prisma/client";
@@ -10,36 +11,46 @@ import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
 const bcrypt = require("bcrypt");
 
-export default async function userLoginDB(login: loginType): Promise<boolean> {
+export async function userLoginEmailDB(
+  loginEmail: loginEmailType
+): Promise<{ success: boolean; error?: string } | undefined> {
   const cookieStore = cookies();
   const dbSessionID = nanoid(16);
-
-  const findUser: User = await prisma.user.findFirst({
-    where: {
-      email: login.email,
-    },
-  });
-  const matched = await bcrypt.compare(login.password, findUser?.password);
-
   const ironPass = process.env.IRON_SESSION_PW as string;
   const userIP = await publicIpv4();
   const randomNano = nanoid(32);
-  const logmail = {
-    userID: findUser?.id,
-    email: login.email,
+
+  const findUserByEmail: User = await prisma.user.findFirst({
+    where: {
+      email: loginEmail.email,
+    },
+  });
+
+  const passMatchEmail = await bcrypt.compare(
+    loginEmail.password,
+    findUserByEmail?.password
+  );
+
+  const sessionTokenByEmail = {
+    userID: findUserByEmail?.id,
+    email: findUserByEmail?.email,
     userIP,
     randomNano,
   };
 
-  if (matched) {
-    const sealed = await Iron.seal(logmail, ironPass, Iron.defaults);
+  if (findUserByEmail !== null && passMatchEmail) {
+    const sealed = await Iron.seal(
+      sessionTokenByEmail,
+      ironPass,
+      Iron.defaults
+    );
 
     cookieStore.set("userSession", sealed);
 
     await prisma.session.create({
       data: {
         id: dbSessionID as string,
-        userID: findUser?.id as string,
+        userID: findUserByEmail?.id as string,
         sessionData: sealed as string,
         loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
         status: "active" as string,
@@ -47,9 +58,62 @@ export default async function userLoginDB(login: loginType): Promise<boolean> {
     });
 
     await prisma.$disconnect();
-    return true;
+    return { success: true };
   } else {
     await prisma.$disconnect();
-    return false;
+    return { success: false, error: "A megadott emailcím vagy jelszó hibás" };
+  }
+}
+
+export async function userLoginUserDB(
+  loginUser: loginUserType
+): Promise<{ success: boolean; error?: string } | undefined> {
+  const cookieStore = cookies();
+  const dbSessionID = nanoid(16);
+  const ironPass = process.env.IRON_SESSION_PW as string;
+  const userIP = await publicIpv4();
+  const randomNano = nanoid(32);
+
+  const findUserByUsername: User = await prisma.user.findFirst({
+    where: {
+      username: loginUser.username,
+    },
+  });
+
+  const passMatchUser = await bcrypt.compare(
+    loginUser.password,
+    findUserByUsername?.password
+  );
+
+  const sessionTokenByUser = {
+    userID: findUserByUsername?.id,
+    email: findUserByUsername?.email,
+    userIP,
+    randomNano,
+  };
+
+  if (findUserByUsername !== null && passMatchUser) {
+    const sealed = await Iron.seal(sessionTokenByUser, ironPass, Iron.defaults);
+
+    cookieStore.set("userSession", sealed);
+
+    await prisma.session.create({
+      data: {
+        id: dbSessionID as string,
+        userID: findUserByUsername?.id as string,
+        sessionData: sealed as string,
+        loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
+        status: "active" as string,
+      },
+    });
+
+    await prisma.$disconnect();
+    return { success: true };
+  } else {
+    await prisma.$disconnect();
+    return {
+      success: false,
+      error: "A megadott felhasználónév vagy jelszó hibás",
+    };
   }
 }
