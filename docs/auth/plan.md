@@ -1,8 +1,8 @@
 # Authentication Plan
 
 1. [x] SignIn/SignUp with email & password
-2. [ ] Verify login credentials fully with DB
-3. [ ] Allow choosing between username and email at Login
+2. [x] Verify login credentials fully with DB
+3. [x] Allow choosing between username and email at Login
 4. [x] Create sealed cookie in browser, save session cookie in DB
 5. [x] Create single prisma instance for server-side functions
 6. [x] Use authN context provider for Menu component
@@ -14,8 +14,8 @@
 
 ### AuthN Tech stack
 
-- Warrant.dev
-- Bcrypt
-- React Context
-- Hapi Iron
 - Session Cookies
+- Bcrypt
+- Hapi Iron
+- React Context
+- Warrant.dev
