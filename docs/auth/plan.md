@@ -7,9 +7,12 @@
 5. [x] Create single prisma instance for server-side functions
 6. [x] Use authN context provider for Menu component
 7. [ ] Use authN, session context and warrants for conditional data fetching and rendering
-8. [ ] Check session in DB with session cookie and context session for server & client requests periodically(eg. 5 min)
-9. [ ] Re-structure files in directory for transparency
-10. [ ] Add documentation for code
+   - [x] authN, context session set up for Account component
+   * [ ] set up warrants for Account component
+8. [ ] Set up warrants globally and used per-component level
+9. [ ] Check session in DB with session cookie and context session for server & client requests periodically(eg. 5 min)
+10. [ ] Re-structure files in directory for transparency
+11. [ ] Add documentation for code
 
 ### AuthN Tech stack
 
