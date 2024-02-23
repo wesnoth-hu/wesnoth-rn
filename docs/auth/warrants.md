@@ -1,6 +1,6 @@
 # Wesnoth Warrants Plan
 
-1. [ ] Set up Wesnoth tenant
+1. [x] Set up Wesnoth tenant -> tenant:magyar-wesnoth
 2. [ ] Set up Wesnoth roles
 3. [ ] Set up Wesnoth permissions
 4. [ ] Set up authorization warrant for User Account in authN
