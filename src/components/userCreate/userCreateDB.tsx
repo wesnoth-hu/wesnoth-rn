@@ -19,6 +19,7 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
         username: signup.username,
         email: signup.email,
         password: hashedPass,
+        roleID: "349gtuwgeg", //TODO query user roles
         race: signup.race,
         emailVerified: false,
       },
