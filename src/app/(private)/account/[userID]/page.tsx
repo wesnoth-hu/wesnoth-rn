@@ -21,6 +21,7 @@ export default function Account() {
     password: "",
     race: "bat",
     money: 0,
+    roleID: "",
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -28,11 +29,13 @@ export default function Account() {
   const [unseal, setUnseal] = useState<{
     userID: string;
     email: string;
+    roleID: string;
     userIP: string;
     randomNano: string;
   }>({
     userID: "",
     email: "",
+    roleID: "",
     userIP: "",
     randomNano: "",
   });
@@ -45,6 +48,7 @@ export default function Account() {
         ...prevSeal,
         userID: unsealed.userID,
         email: unsealed.email,
+        roleID: unsealed.roleID,
         userIP: unsealed.userIP,
         randomNano: unsealed.randomNano,
       }));
@@ -71,6 +75,7 @@ export default function Account() {
       setUnseal({
         userID: "",
         email: "",
+        roleID: "",
         userIP: "",
         randomNano: "",
       });
@@ -96,6 +101,7 @@ export default function Account() {
           <div>
             Email ellenőrizve: {userData.emailVerified ? "Igen" : "Nem"}
           </div>
+          <div>Szerep ID: {userData.roleID}</div>
           <div>
             Regisztráció dátuma:{" "}
             {userData.createdAt.toLocaleDateString("hu-HU", {

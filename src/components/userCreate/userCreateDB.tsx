@@ -15,7 +15,7 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
   const roleID = await prisma.roles.findFirst({
     where: {
       name: {
-        equals: "admin", // TODO generally 'user' role
+        equals: "user", // TODO generally 'user' role
       },
     },
   });
