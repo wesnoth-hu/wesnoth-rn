@@ -35,6 +35,7 @@ export async function userLoginEmailDB(
     const sessionTokenByEmail = {
       userID: findUserByEmail?.id,
       email: findUserByEmail?.email,
+      role: findUserByEmail?.roleID,
       userIP,
       randomNano,
     };
@@ -94,6 +95,7 @@ export async function userLoginUserDB(
     const sessionTokenByUser = {
       userID: findUserByUsername?.id,
       email: findUserByUsername?.email,
+      role: findUserByUsername?.roleID,
       userIP,
       randomNano,
     };
