@@ -14,6 +14,7 @@ model user {
   password      String      @db.VarChar(100)
   emailVerified Boolean
   race          String      @db.VarChar(100)
+  level         Int         @default(1) @db.UnsignedInt
   money         Int?
   createdAt     DateTime    @default(now()) @db.DateTime(0)
   updatedAt     DateTime    @default(now()) @updatedAt @db.DateTime(0)
