@@ -35,12 +35,11 @@ export async function userLoginEmailDB(
     const sessionTokenByEmail = {
       userID: findUserByEmail?.id,
       email: findUserByEmail?.email,
-      role: findUserByEmail?.roleID,
       userIP,
       randomNano,
     };
 
-    if (findUserByEmail !== null && passMatchEmail) {
+    if (findUserByEmail?.email === loginEmail.email && passMatchEmail) {
       const sealed = await Iron.seal(
         sessionTokenByEmail,
         ironPass,
@@ -95,12 +94,11 @@ export async function userLoginUserDB(
     const sessionTokenByUser = {
       userID: findUserByUsername?.id,
       email: findUserByUsername?.email,
-      role: findUserByUsername?.roleID,
       userIP,
       randomNano,
     };
 
-    if (findUserByUsername !== null && passMatchUser) {
+    if (findUserByUsername?.username === loginUser.username && passMatchUser) {
       const sealed = await Iron.seal(
         sessionTokenByUser,
         ironPass,

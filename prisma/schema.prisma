@@ -13,7 +13,6 @@ model user {
   email         String      @db.VarChar(100)
   password      String      @db.VarChar(100)
   emailVerified Boolean
-  roleID        String      @db.VarChar(16)
   race          String      @db.VarChar(100)
   money         Int?
   createdAt     DateTime    @default(now()) @db.DateTime(0)
@@ -24,9 +23,6 @@ model user {
   post          post[]
   savegames     savegames[]
   session       session[]
-  roles         roles       @relation(fields: [roleID], references: [id], onDelete: Cascade, map: "user_roles_FK")
-
-  @@index([roleID], map: "user_roles_FK")
 }
 
 model savegames {
@@ -102,33 +98,4 @@ model media {
   user       user     @relation(fields: [uploadedBy], references: [id], onDelete: Cascade, map: "media_user_FK")
 
   @@index([uploadedBy], map: "media_user_FK")
-}
-
-model permissions {
-  id               String             @id @db.VarChar(16)
-  name             String             @db.VarChar(100)
-  description      String             @db.VarChar(200)
-  createdAt        DateTime           @default(now()) @db.Timestamp(0)
-  updatedAt        DateTime           @default(now()) @db.Timestamp(0)
-  role_permissions role_permissions[]
-}
-
-model role_permissions {
-  permissionID String      @db.VarChar(16)
-  roleID       String      @db.VarChar(16)
-  permissions  permissions @relation(fields: [permissionID], references: [id], onDelete: Cascade, map: "role_permissions_permissions_FK")
-  roles        roles       @relation(fields: [roleID], references: [id], onDelete: Cascade, map: "role_permissions_roles_FK")
-
-  @@id([roleID, permissionID])
-  @@index([permissionID], map: "role_permissions_permissions_FK")
-}
-
-model roles {
-  id               String             @id @db.VarChar(16)
-  name             String             @db.VarChar(100)
-  description      String?            @db.VarChar(200)
-  createdAt        DateTime           @default(now()) @db.Timestamp(0)
-  updatedAt        DateTime           @default(now()) @db.Timestamp(0)
-  role_permissions role_permissions[]
-  user             user[]
 }

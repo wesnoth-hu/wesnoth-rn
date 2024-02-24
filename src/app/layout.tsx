@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import React from "react";
 
+import { WarrantProvider } from "@warrantdev/react-warrant-js";
+
 import localFont from "next/font/local";
 import Image from "next/image";
 
@@ -34,50 +36,52 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReactQueryProvider>
-      <SessionProvider>
-        <AuthProvider>
-          <html lang="en">
-            <body className={ebg.className}>
-              <main className={styles.main}>
-                <header>
-                  <div className={styles.fejlec}>
-                    <div className={styles.logo}>
-                      <Image
-                        src="/logo-hu.png"
-                        alt="Hungarian Wesnoth Logo"
-                        width={415}
-                        height={210}
-                        priority
-                        className={styles.logoImg}
-                      />
+    <WarrantProvider clientKey={process.env.WARRANT_CLIENT_KEY as string}>
+      <ReactQueryProvider>
+        <SessionProvider>
+          <AuthProvider>
+            <html lang="en">
+              <body className={ebg.className}>
+                <main className={styles.main}>
+                  <header>
+                    <div className={styles.fejlec}>
+                      <div className={styles.logo}>
+                        <Image
+                          src="/logo-hu.png"
+                          alt="Hungarian Wesnoth Logo"
+                          width={415}
+                          height={210}
+                          priority
+                          className={styles.logoImg}
+                        />
+                      </div>
+
+                      <nav>
+                        <Menu />
+                      </nav>
                     </div>
+                  </header>
 
-                    <nav>
-                      <Menu />
-                    </nav>
-                  </div>
-                </header>
+                  <section>
+                    <div className={styles.tartkozep}>
+                      {/*Aside Left*/}
+                      <div className={styles.sideProfile}>Side</div>
+                      {/*Section*/}
+                      <div className={styles.kozep}>{children}</div>
+                    </div>
+                  </section>
 
-                <section>
-                  <div className={styles.tartkozep}>
-                    {/*Aside Left*/}
-                    <div className={styles.sideProfile}>Side</div>
-                    {/*Section*/}
-                    <div className={styles.kozep}>{children}</div>
-                  </div>
-                </section>
-
-                <footer>
-                  <div className={styles.lablec}>
-                    <Footer />
-                  </div>
-                </footer>
-              </main>
-            </body>
-          </html>
-        </AuthProvider>
-      </SessionProvider>
-    </ReactQueryProvider>
+                  <footer>
+                    <div className={styles.lablec}>
+                      <Footer />
+                    </div>
+                  </footer>
+                </main>
+              </body>
+            </html>
+          </AuthProvider>
+        </SessionProvider>
+      </ReactQueryProvider>
+    </WarrantProvider>
   );
 }

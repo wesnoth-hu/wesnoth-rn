@@ -14,6 +14,9 @@ import { handleZodValidation } from "@/lib/ZodError";
 import React, { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { useWarrant } from "@warrantdev/react-warrant-js";
+import { WarrantClient } from "@warrantdev/warrant-node";
+
 import styles from "@/styles/Login.module.css";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
@@ -27,6 +30,8 @@ export default function SignIn() {
   const [choose, setChoose] = useState<boolean>(false);
 
   const router = useRouter();
+
+  const { setSessionToken } = useWarrant();
 
   const [loginEmailData, setLoginEmailData] = useState<loginEmailType>({
     email: "",
@@ -90,6 +95,7 @@ export default function SignIn() {
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
+      setSessionToken(sessionCookie as string);
       resetEmailForm();
       router.push(`/account/${userID}`);
     }
@@ -107,6 +113,7 @@ export default function SignIn() {
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
+      setSessionToken(sessionCookie as string);
       resetUserForm();
       router.push(`/account/${userID}`);
     }
