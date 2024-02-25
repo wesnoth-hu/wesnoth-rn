@@ -7,7 +7,6 @@ import GetSessionCookie from "./getSessionCookie";
 export default async function SessionData(): Promise<{
   userID: string;
   email: string;
-  roleID: string;
   userIP: string;
   randomNano: string;
 }> {
@@ -24,7 +23,6 @@ export default async function SessionData(): Promise<{
     return {
       userID: "",
       email: "",
-      roleID: "",
       userIP: "",
       randomNano: "",
     };
