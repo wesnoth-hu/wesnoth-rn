@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React from "react";
 import { redirect } from "next/navigation";
 
 function VerifyEmail(username: string, code: string) {
