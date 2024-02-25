@@ -1,3 +1,4 @@
+"use client";
 import React, { Dispatch, SetStateAction } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
@@ -9,18 +10,20 @@ export default function ChooseButton({
   choose,
   setChoose,
   setErrors,
-  reset,
+  resetForm,
+  resetError,
 }: {
   choose: boolean;
   setChoose: Dispatch<SetStateAction<boolean>>;
   setErrors: Dispatch<SetStateAction<ValidationError<typeof loginZodSchema>>>;
-  reset: () => void;
+  resetForm: () => void;
+  resetError: () => void;
 }) {
   return (
     <div className={styles.chooseButton}>
       <div
         onClick={() => {
-          setChoose(!choose), setErrors({}), reset();
+          setChoose(!choose), setErrors({}), resetForm(), resetError();
         }}
       >
         <FontAwesomeIcon

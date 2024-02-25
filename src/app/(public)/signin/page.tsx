@@ -83,6 +83,10 @@ export default function SignIn() {
 
   const [invalidPass, setInvalidPass] = useState<string>("");
 
+  const resetError = () => {
+    setInvalidPass("");
+  };
+
   const onClickEmailLogin = async (logindata: loginEmailType) => {
     const loginSuccess = await userLoginEmailDB(logindata);
 
@@ -252,7 +256,8 @@ export default function SignIn() {
             choose={choose}
             setChoose={setChoose}
             setErrors={setErrors}
-            reset={choose ? resetUserForm : resetEmailForm}
+            resetForm={choose ? resetUserForm : resetEmailForm}
+            resetError={resetError}
           />
         </div>
         <div className={styles.error}>

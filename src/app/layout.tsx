@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
 
-import { WarrantProvider } from "@warrantdev/react-warrant-js";
-
 import localFont from "next/font/local";
 import Image from "next/image";
 
@@ -16,6 +14,7 @@ import Footer from "@/components/Footer/Footer";
 
 import AuthProvider from "@/context/AuthContextProvider/AuthProvider";
 import SessionProvider from "@/context/SessionContextProvider/SessionProvider";
+import WarrantClientProvider from "./WarrantClientProvider";
 
 export const metadata: Metadata = {
   title: "Harc Wesnothért",
@@ -36,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <WarrantProvider clientKey={process.env.WARRANT_CLIENT_KEY as string}>
+    <WarrantClientProvider>
       <ReactQueryProvider>
         <SessionProvider>
           <AuthProvider>
@@ -82,6 +81,6 @@ export default function RootLayout({
           </AuthProvider>
         </SessionProvider>
       </ReactQueryProvider>
-    </WarrantProvider>
+    </WarrantClientProvider>
   );
 }

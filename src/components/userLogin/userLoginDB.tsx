@@ -13,24 +13,32 @@ const bcrypt = require("bcrypt");
 
 export async function userLoginEmailDB(
   loginEmail: loginEmailType
-): Promise<{ success: boolean; error?: string } | undefined> {
-  const cookieStore = cookies();
-  const dbSessionID = nanoid(16);
-  const ironPass = process.env.IRON_SESSION_PW as string;
-  const userIP = await publicIpv4();
-  const randomNano = nanoid(32);
-
+): Promise<{ success: boolean; error?: string }> {
   try {
+    const cookieStore = cookies();
+    const dbSessionID = nanoid(16);
+    const ironPass = process.env.IRON_SESSION_PW as string;
+    const userIP = await publicIpv4();
+    const randomNano = nanoid(32);
+
     const findUserByEmail: User = await prisma.user.findFirst({
       where: {
-        email: loginEmail.email,
+        email: { equals: loginEmail.email },
       },
     });
+
+    if (!findUserByEmail) {
+      return { success: false, error: "A megadott emailcím nem létezik" };
+    }
 
     const passMatchEmail = await bcrypt.compare(
       loginEmail.password,
       findUserByEmail?.password
     );
+
+    if (!passMatchEmail) {
+      return { success: false, error: "A megadott jelszó hibás" };
+    }
 
     const sessionTokenByEmail = {
       userID: findUserByEmail?.id,
@@ -39,89 +47,93 @@ export async function userLoginEmailDB(
       randomNano,
     };
 
-    if (findUserByEmail?.email === loginEmail.email && passMatchEmail) {
-      const sealed = await Iron.seal(
-        sessionTokenByEmail,
-        ironPass,
-        Iron.defaults
-      );
+    const sealed = await Iron.seal(
+      sessionTokenByEmail,
+      ironPass,
+      Iron.defaults
+    );
 
-      cookieStore.set("userSession", sealed);
+    cookieStore.set("userSession", sealed);
 
-      await prisma.session.create({
-        data: {
-          id: dbSessionID as string,
-          userID: findUserByEmail?.id as string,
-          sessionData: sealed as string,
-          loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
-          status: "active" as string,
-        },
-      });
+    await prisma.session.create({
+      data: {
+        id: dbSessionID as string,
+        userID: findUserByEmail?.id as string,
+        sessionData: sealed as string,
+        loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
+        status: "active" as string,
+      },
+    });
 
-      await prisma.$disconnect();
-      return { success: true };
-    }
+    await prisma.$disconnect();
+    return { success: true };
   } catch (error) {
+    console.error("Error during login:", error);
     await prisma.$disconnect();
     return {
       success: false,
-      error: "A megadott emailcím vagy jelszó hibás",
+      error: "Hiba tőrtént a bejelentkezés során",
     };
   }
 }
 
 export async function userLoginUserDB(
   loginUser: loginUserType
-): Promise<{ success: boolean; error?: string } | undefined> {
-  const cookieStore = cookies();
-  const dbSessionID = nanoid(16);
-  const ironPass = process.env.IRON_SESSION_PW as string;
-  const userIP = await publicIpv4();
-  const randomNano = nanoid(32);
-
+): Promise<{ success: boolean; error?: string }> {
   try {
-    const findUserByUsername: User = await prisma.user.findFirst({
+    const cookieStore = cookies();
+    const dbSessionID = nanoid(16);
+    const ironPass = process.env.IRON_SESSION_PW as string;
+    const userIP = await publicIpv4();
+    const randomNano = nanoid(32);
+
+    const findUserByUsername = await prisma.user.findFirst({
       where: {
-        username: loginUser.username,
+        username: {
+          equals: loginUser.username,
+        },
       },
     });
 
+    if (!findUserByUsername) {
+      return { success: false, error: "A megadott felhasználónév hibás" };
+    }
+
     const passMatchUser = await bcrypt.compare(
       loginUser.password,
-      findUserByUsername?.password
+      findUserByUsername.password
     );
 
+    if (!passMatchUser) {
+      return { success: false, error: "A megadott jelszó hibás" };
+    }
+
     const sessionTokenByUser = {
-      userID: findUserByUsername?.id,
-      email: findUserByUsername?.email,
+      userID: findUserByUsername.id,
+      email: findUserByUsername.email,
       userIP,
       randomNano,
     };
 
-    if (findUserByUsername?.username === loginUser.username && passMatchUser) {
-      const sealed = await Iron.seal(
-        sessionTokenByUser,
-        ironPass,
-        Iron.defaults
-      );
+    const sealed = await Iron.seal(sessionTokenByUser, ironPass, Iron.defaults);
 
-      cookieStore.set("userSession", sealed);
+    cookieStore.set("userSession", sealed);
 
-      await prisma.session.create({
-        data: {
-          id: dbSessionID as string,
-          userID: findUserByUsername?.id as string,
-          sessionData: sealed as string,
-          loginAt: new Date(),
-          status: "active" as string,
-        },
-      });
+    await prisma.session.create({
+      data: {
+        id: dbSessionID,
+        userID: findUserByUsername.id,
+        sessionData: sealed,
+        loginAt: new Date(),
+        status: "active",
+      },
+    });
 
-      await prisma.$disconnect();
-      return { success: true };
-    }
-  } catch (error) {
     await prisma.$disconnect();
-    return { success: false, error: "Felhasználónév hibás" };
+    return { success: true };
+  } catch (error) {
+    console.error("Error during login:", error);
+    await prisma.$disconnect();
+    return { success: false, error: "Hiba történt a bejelentkezés során" };
   }
 }
