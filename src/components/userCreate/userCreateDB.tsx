@@ -12,14 +12,6 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
 
   const hashedPass = await bcrypt.hash(signup.password, 8);
 
-  const roleID = await prisma.roles.findFirst({
-    where: {
-      name: {
-        equals: "user", // TODO generally 'user' role
-      },
-    },
-  });
-
   try {
     await prisma.user.create({
       data: {
@@ -27,7 +19,6 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
         username: signup.username,
         email: signup.email,
         password: hashedPass,
-        roleID: roleID?.id as string,
         race: signup.race,
         emailVerified: false,
       },

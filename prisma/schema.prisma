@@ -11,6 +11,7 @@ model user {
   id            String       @id @db.VarChar(16)
   username      String       @db.VarChar(100)
   email         String       @db.VarChar(100)
+  password      String       @db.VarChar(1000)
   emailVerified Boolean      @default(false)
   race          String       @db.VarChar(100)
   level         Int          @default(1) @db.UnsignedInt
@@ -28,7 +29,8 @@ model session {
   id          String   @id @db.VarChar(16)
   userID      String   @db.VarChar(16)
   sessiondata String   @db.VarChar(2000)
-  logintAt    DateTime @default(now()) @db.Timestamp(0)
+  status      String   @db.VarChar(100)
+  loginAt     DateTime @default(now()) @db.Timestamp(0)
   logoutAt    DateTime @default(now()) @db.Timestamp(0)
   user        user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "session_user_FK")
 

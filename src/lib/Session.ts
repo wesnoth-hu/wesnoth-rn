@@ -1,7 +1,7 @@
 export type Session = {
   id: string;
   userID: string;
-  sessionData: string;
+  sessiondata: string;
   loginAt: Date;
   logoutAt: Date | null;
   status: string;

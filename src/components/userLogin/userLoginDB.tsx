@@ -59,7 +59,7 @@ export async function userLoginEmailDB(
       data: {
         id: dbSessionID as string,
         userID: findUserByEmail?.id as string,
-        sessionData: sealed as string,
+        sessiondata: sealed as string,
         loginAt: new Date(), //.toISOString().slice(0, 19).replace('T', ' '),
         status: "active" as string,
       },
@@ -123,7 +123,7 @@ export async function userLoginUserDB(
       data: {
         id: dbSessionID,
         userID: findUserByUsername.id,
-        sessionData: sealed,
+        sessiondata: sealed,
         loginAt: new Date(),
         status: "active",
       },
