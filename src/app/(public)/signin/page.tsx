@@ -81,10 +81,10 @@ export default function SignIn() {
     {}
   );
 
-  const [invalidPass, setInvalidPass] = useState<string>("");
+  const [invalidLogin, setInvalidLogin] = useState<string>("");
 
   const resetError = () => {
-    setInvalidPass("");
+    setInvalidLogin("");
   };
 
   const onClickEmailLogin = async (logindata: loginEmailType) => {
@@ -92,7 +92,7 @@ export default function SignIn() {
 
     if (loginSuccess?.success === false) {
       resetEmailForm();
-      setInvalidPass(loginSuccess?.error as string);
+      setInvalidLogin(loginSuccess?.error as string);
       return;
     } else {
       const userID = await GetUserID();
@@ -110,7 +110,7 @@ export default function SignIn() {
 
     if (loginSuccess?.success === false) {
       resetUserForm();
-      setInvalidPass(loginSuccess?.error as string);
+      setInvalidLogin(loginSuccess?.error as string);
       return;
     } else {
       const userID = await GetUserID();
@@ -257,7 +257,7 @@ export default function SignIn() {
             setChoose={setChoose}
             setErrors={setErrors}
             resetForm={choose ? resetUserForm : resetEmailForm}
-            resetError={resetError}
+            resetCustomError={resetError}
           />
         </div>
         <div className={styles.error}>
@@ -278,8 +278,8 @@ export default function SignIn() {
             <div style={{ color: "red" }}>Jelszó ismét - {errors.confirm}</div>
           ) : null}
 
-          {invalidPass !== "" ? (
-            <div style={{ color: "red" }}>{invalidPass}</div>
+          {invalidLogin !== "" ? (
+            <div style={{ color: "red" }}>{invalidLogin}</div>
           ) : null}
         </div>
       </main>

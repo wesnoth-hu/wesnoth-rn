@@ -11,19 +11,19 @@ export default function ChooseButton({
   setChoose,
   setErrors,
   resetForm,
-  resetError,
+  resetCustomError,
 }: {
   choose: boolean;
   setChoose: Dispatch<SetStateAction<boolean>>;
   setErrors: Dispatch<SetStateAction<ValidationError<typeof loginZodSchema>>>;
   resetForm: () => void;
-  resetError: () => void;
+  resetCustomError: () => void;
 }) {
   return (
     <div className={styles.chooseButton}>
       <div
         onClick={() => {
-          setChoose(!choose), setErrors({}), resetForm(), resetError();
+          setChoose(!choose), setErrors({}), resetForm(), resetCustomError();
         }}
       >
         <FontAwesomeIcon
