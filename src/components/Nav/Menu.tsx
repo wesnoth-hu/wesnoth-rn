@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
 
-import UpdateSession from "@/lib/logout/updateSession";
+import UpdateSession from "@/actions/Logout/updateSession";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,7 +30,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "@/styles/Menu.module.css";
-import SessionData from "../Server/sessionData";
+import SessionData from "@/actions/Server/sessionData";
 
 export default function Menu() {
   const [isAuth, setIsAuth] = useContext(AuthContext);
@@ -71,6 +71,7 @@ export default function Menu() {
     typeof window !== "undefined" ? window.innerWidth : 0
   );
 
+  // TODO replace this useEffect with a Tanstack useQuery()
   useEffect(() => {
     async function fetchData() {
       const unsealed = await SessionData();
@@ -207,7 +208,10 @@ export default function Menu() {
                 setIsOpen(false);
               }}
             >
-              <Link href={`/account/${unseal.userID}`} className={styles.link}>
+              <Link
+                href={`/adatlap/u/${unseal.userID}`}
+                className={styles.link}
+              >
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
@@ -285,7 +289,10 @@ export default function Menu() {
                 setIsOpen(false);
               }}
             >
-              <Link href={`/account/${unseal.userID}`} className={styles.link}>
+              <Link
+                href={`/adatlap/u/${unseal.userID}`}
+                className={styles.link}
+              >
                 <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
               </Link>
             </div>
@@ -462,7 +469,7 @@ export default function Menu() {
                     }}
                   >
                     <Link
-                      href={`/account/${unseal.userID}`}
+                      href={`/adatlap/u/${unseal.userID}`}
                       className={styles.link}
                     >
                       <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { prisma } from "../prisma/client";
+import { prisma } from "@/lib/prisma/client";
 
 export default async function UpdateSession(ID: string): Promise<void> {
   const cookieStore = cookies();
@@ -35,6 +35,7 @@ export default async function UpdateSession(ID: string): Promise<void> {
     cookieStore.delete("userSession"); // deletes the `userSession` cookie
   } catch (error) {
     console.error("updateSession error: ", error);
+    // TODO implement custom error message shown in the UI => { success: false/true, error: "Custom Error Message"}
   }
 
   await prisma.$disconnect();

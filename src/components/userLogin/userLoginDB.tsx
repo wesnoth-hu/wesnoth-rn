@@ -6,7 +6,7 @@ import type { loginUserType } from "@/lib/login/loginUserType";
 import { cookies } from "next/headers";
 import * as Iron from "@hapi/iron";
 import { prisma } from "@/lib/prisma/client";
-import { User } from "@/lib/login/user";
+import { User } from "@/lib/user";
 import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
 const bcrypt = require("bcrypt");
@@ -21,9 +21,9 @@ export async function userLoginEmailDB(
     const userIP = await publicIpv4();
     const randomNano = nanoid(32);
 
-    const findUserByEmail: User = await prisma.user.findFirst({
+    const findUserByEmail: User = await prisma.user.findUnique({
       where: {
-        email: { equals: loginEmail.email },
+        email: loginEmail.email,
       },
     });
 
@@ -87,11 +87,9 @@ export async function userLoginUserDB(
     const userIP = await publicIpv4();
     const randomNano = nanoid(32);
 
-    const findUserByUsername = await prisma.user.findFirst({
+    const findUserByUsername = await prisma.user.findUnique({
       where: {
-        username: {
-          equals: loginUser.username,
-        },
+        username: loginUser.username,
       },
     });
 

@@ -1,10 +1,11 @@
 "use server";
-import { prisma } from "../prisma/client";
+import { prisma } from "@/lib/prisma/client";
 import { cookies } from "next/headers";
 import Iron from "@hapi/iron";
-import { UnsealObject } from "@/components/Account/unsealed";
+import { UnsealObject } from "@/lib/unsealed";
+import { User } from "@/lib/user";
 
-export default async function GetUserID(): Promise<string> {
+export default async function GetUser(): Promise<User> {
   const cookieStore = cookies();
 
   const IronPass: string = process.env.IRON_SESSION_PW as string;
@@ -15,7 +16,7 @@ export default async function GetUserID(): Promise<string> {
     Iron.defaults
   ); // unseales cookie to extract data
 
-  const userID = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
       email: unsealed.email,
     },
@@ -23,5 +24,5 @@ export default async function GetUserID(): Promise<string> {
 
   await prisma.$disconnect();
 
-  return userID?.id as string;
+  return user as User;
 }

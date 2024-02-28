@@ -1,6 +1,6 @@
 "use server";
 
-import { UnsealObject } from "@/components/Account/unsealed";
+import { UnsealObject } from "@/lib/unsealed";
 import * as Iron from "@hapi/iron";
 import GetSessionCookie from "./getSessionCookie";
 
@@ -25,6 +25,6 @@ export default async function SessionData(): Promise<{
       email: "",
       userIP: "",
       randomNano: "",
-    };
+    }; //TODO implement custom error message+ send notification to adminUI
   }
 }

@@ -5,6 +5,7 @@ export type User = {
   password: string;
   emailVerified: boolean;
   race: string;
+  level: number;
   money: number | null;
   createdAt: Date;
   updatedAt: Date;

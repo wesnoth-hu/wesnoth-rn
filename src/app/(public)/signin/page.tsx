@@ -3,7 +3,7 @@
 
 import { userLoginEmailDB } from "@/components/userLogin/userLoginDB";
 import { userLoginUserDB } from "@/components/userLogin/userLoginDB";
-import GetUserID from "@/lib/login/getuserID";
+import GetUser from "@/actions/getUser";
 
 import type { loginEmailType } from "@/lib/login/loginEmailType";
 import type { loginUserType } from "@/lib/login/loginUserType";
@@ -20,7 +20,7 @@ import { WarrantClient } from "@warrantdev/warrant-node";
 import styles from "@/styles/Login.module.css";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
 import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
-import GetSessionCookie from "@/components/Server/getSessionCookie";
+import GetSessionCookie from "@/actions/Server/getSessionCookie";
 
 import ChooseButton from "./chooseButton";
 
@@ -95,13 +95,13 @@ export default function SignIn() {
       setInvalidLogin(loginSuccess?.error as string);
       return;
     } else {
-      const userID = await GetUserID();
+      const userID = await GetUser();
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
       setSessionToken(sessionCookie as string);
       resetEmailForm();
-      router.push(`/account/${userID}`);
+      router.push(`/adatlap/u/${userID?.id}`);
     }
   };
 
@@ -113,13 +113,13 @@ export default function SignIn() {
       setInvalidLogin(loginSuccess?.error as string);
       return;
     } else {
-      const userID = await GetUserID();
+      const userID = await GetUser();
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
       setSessionToken(sessionCookie as string);
       resetUserForm();
-      router.push(`/account/${userID}`);
+      router.push(`/adatlap/u/${userID?.id}`);
     }
   };
 
