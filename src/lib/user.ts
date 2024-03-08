@@ -2,7 +2,7 @@ export type User = {
   id: string;
   username: string;
   email: string;
-  password: string;
+  passwordHash: string;
   emailVerified: boolean;
   race: string;
   level: number;

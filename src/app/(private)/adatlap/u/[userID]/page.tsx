@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import GetUser from "@/actions/getUser";
 import { User } from "@/lib/user";
@@ -20,7 +21,7 @@ export default function Page() {
     username: "",
     email: "",
     emailVerified: false,
-    password: "",
+    passwordHash: "",
     race: "bat",
     level: 0,
     money: 0,
@@ -37,6 +38,8 @@ export default function Page() {
     }
     if (session !== "") {
       fetchUser();
+    } else {
+      redirect("/");
     }
   }, [session]);
 

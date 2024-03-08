@@ -33,7 +33,7 @@ export async function userLoginEmailDB(
 
     const passMatchEmail = await bcrypt.compare(
       loginEmail.password,
-      findUserByEmail?.password
+      findUserByEmail?.passwordHash
     );
 
     if (!passMatchEmail) {
@@ -99,7 +99,7 @@ export async function userLoginUserDB(
 
     const passMatchUser = await bcrypt.compare(
       loginUser.password,
-      findUserByUsername.password
+      findUserByUsername.passwordHash
     );
 
     if (!passMatchUser) {
