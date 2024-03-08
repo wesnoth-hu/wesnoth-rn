@@ -18,7 +18,7 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
         id: userId,
         username: signup.username,
         email: signup.email,
-        password: hashedPass,
+        passwordHash: hashedPass,
         race: signup.race,
         emailVerified: false,
       },

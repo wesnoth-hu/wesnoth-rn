@@ -31,6 +31,7 @@ import {
 
 import styles from "@/styles/Menu.module.css";
 import SessionData from "@/actions/Server/sessionData";
+import { UnsealObject } from "@/lib/unsealed";
 
 export default function Menu() {
   const [isAuth, setIsAuth] = useContext(AuthContext);
@@ -74,7 +75,7 @@ export default function Menu() {
   // TODO replace this useEffect with a Tanstack useQuery()
   useEffect(() => {
     async function fetchData() {
-      const unsealed = await SessionData();
+      const unsealed: UnsealObject = await SessionData();
 
       setUnseal((prevSeal) => ({
         ...prevSeal,
@@ -122,7 +123,7 @@ export default function Menu() {
     // put dropdown menu to calculated coordinates between 650 and 980 pixels
     if (menuIcon1150 instanceof HTMLDivElement) {
       const iconRect1150 = menuIcon1150.getBoundingClientRect();
-      const iconLeft1150 = iconRect1150.left + window.scrollX + 175;
+      const iconLeft1150 = iconRect1150.left + window.scrollX + 215;
       const newTop1150 = iconRect1150.bottom + window.scrollY + 10;
       setMenuTopLeft({ screenY: newTop1150, screenX: iconLeft1150 });
     }
@@ -130,7 +131,7 @@ export default function Menu() {
     // put dropdown menu to claculated coordinates for 650 and lower pixels
     if (menuIcon650 instanceof HTMLDivElement) {
       const iconRect650 = menuIcon650.getBoundingClientRect();
-      const iconLeft650 = iconRect650.left + window.scrollX + 175;
+      const iconLeft650 = iconRect650.left + window.scrollX + 215;
       const newTop650 = iconRect650.bottom + window.scrollY + 10;
       setMenuTopLeft({ screenY: newTop650, screenX: iconLeft650 });
     }
@@ -139,7 +140,7 @@ export default function Menu() {
     const handleResize1150 = () => {
       if (menuIcon1150 instanceof HTMLDivElement) {
         const iconRect = menuIcon1150.getBoundingClientRect();
-        const iconleft = iconRect.right - window.scrollX - 175;
+        const iconleft = iconRect.right - window.scrollX - 215;
         const newTop = iconRect.bottom + window.scrollY + 10;
         setMenuTopLeft({ screenY: newTop, screenX: iconleft });
       }
@@ -149,7 +150,7 @@ export default function Menu() {
     const handleResize650 = () => {
       if (menuIcon650 instanceof HTMLDivElement) {
         const iconRect = menuIcon650.getBoundingClientRect();
-        const iconleft = iconRect.right - window.scrollX - 175;
+        const iconleft = iconRect.right - window.scrollX - 215;
         const newTop = iconRect.bottom + window.scrollY + 10;
         setMenuTopLeft({ screenY: newTop, screenX: iconleft });
       }
