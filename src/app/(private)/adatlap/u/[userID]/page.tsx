@@ -58,7 +58,7 @@ export default function Page() {
           </div>
           <div>Felhasználónév: {userData.username}</div>
           <div>
-            {userData.race} - Level {userData.level}
+            Level {userData.level} - {userData.race}
           </div>
           <div>Arany: {userData.money}</div>
           <div>
