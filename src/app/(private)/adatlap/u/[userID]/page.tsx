@@ -1,51 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import GetUser from "@/actions/getUser";
-import { User } from "@/lib/user";
-
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
-import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
+import GetUser from "@/actions/user/getUser";
+import { User } from "@/lib/user/user";
 
 export default function Page() {
-  const [isAuth] = useContext(AuthContext);
-  const [session] = useContext(SessionContext);
-
-  const [userData, setUserData] = useState<User>({
-    id: "",
-    username: "",
-    email: "",
-    emailVerified: false,
-    passwordHash: "",
-    race: "bat",
-    level: 0,
-    money: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
-  // TODO replace this with React Query to avoid staleness
-  // TODO enable caching
-  useEffect(() => {
-    async function fetchUser() {
-      const user = await GetUser();
-      setUserData(user as User);
-    }
-    if (session !== "") {
-      fetchUser();
-    } else {
-      redirect("/");
-    }
-  }, [session]);
-
   return (
     <>
-      {isAuth && session && userData && (
+      {isAuth && session === sessionData && userData && (
         <>
           <div>
             <Image
@@ -75,7 +40,6 @@ export default function Page() {
           </div>
         </>
       )}
-      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 }

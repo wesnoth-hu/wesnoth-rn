@@ -5,10 +5,10 @@ Tech Stack:
 1. NextJS
 2. ReactJS
 3. Prisma
-4. BCrypt
+4. BCryptJS
 5. NanoID
 6. FontAwesome
 7. Zod
 8. TypeScript
-9. TanStack/React-Query
-10. MySQL
+9. MySQL
+10. Zustand

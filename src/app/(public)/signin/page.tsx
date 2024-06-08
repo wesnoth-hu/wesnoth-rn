@@ -3,7 +3,7 @@
 
 import { userLoginEmailDB } from "@/components/userLogin/userLoginDB";
 import { userLoginUserDB } from "@/components/userLogin/userLoginDB";
-import GetUser from "@/actions/getUser";
+import GetUser from "@/actions/user/getUser";
 
 import type { loginEmailType } from "@/lib/login/loginEmailType";
 import type { loginUserType } from "@/lib/login/loginUserType";
@@ -13,9 +13,6 @@ import { handleZodValidation } from "@/lib/ZodError";
 
 import React, { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { useWarrant } from "@warrantdev/react-warrant-js";
-import { WarrantClient } from "@warrantdev/warrant-node";
 
 import styles from "@/styles/Login.module.css";
 import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
@@ -30,8 +27,6 @@ export default function SignIn() {
   const [choose, setChoose] = useState<boolean>(false);
 
   const router = useRouter();
-
-  const { setSessionToken } = useWarrant();
 
   const [loginEmailData, setLoginEmailData] = useState<loginEmailType>({
     email: "",
@@ -99,7 +94,6 @@ export default function SignIn() {
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
-      setSessionToken(sessionCookie as string);
       resetEmailForm();
       router.push(`/adatlap/u/${userID?.id}`);
     }
@@ -117,7 +111,6 @@ export default function SignIn() {
       const sessionCookie = await GetSessionCookie();
       setIsAuth(true);
       setSession(sessionCookie as string);
-      setSessionToken(sessionCookie as string);
       resetUserForm();
       router.push(`/adatlap/u/${userID?.id}`);
     }

@@ -2,8 +2,8 @@
 import { prisma } from "@/lib/prisma/client";
 import { cookies } from "next/headers";
 import Iron from "@hapi/iron";
-import { UnsealObject } from "@/lib/unsealed";
-import { User } from "@/lib/user";
+import { UnsealObject } from "@/lib/iron/unsealed";
+import { User } from "@/lib/user/user";
 
 export default async function GetUser(): Promise<User> {
   const cookieStore = cookies();

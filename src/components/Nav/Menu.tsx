@@ -1,19 +1,8 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-  type MouseEvent,
-} from "react";
+import React, { useState, useEffect, useRef, type MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { AuthContext } from "@/context/AuthContextProvider/AuthContext";
-import { SessionContext } from "@/context/SessionContextProvider/SessionContext";
-
-import UpdateSession from "@/actions/Logout/updateSession";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,25 +19,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "@/styles/Menu.module.css";
-import SessionData from "@/actions/Server/sessionData";
-import { UnsealObject } from "@/lib/unsealed";
 
 export default function Menu() {
-  const [isAuth, setIsAuth] = useContext(AuthContext);
-  const [session, setSession] = useContext(SessionContext);
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [unseal, setUnseal] = useState<{
-    userID: string;
-    email: string;
-    userIP: string;
-    randomNano: string;
-  }>({
-    userID: "",
-    email: "",
-    userIP: "",
-    randomNano: "",
-  });
 
   const router = useRouter();
 
@@ -71,24 +44,6 @@ export default function Menu() {
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
-
-  // TODO replace this useEffect with a Tanstack useQuery()
-  useEffect(() => {
-    async function fetchData() {
-      const unsealed: UnsealObject = await SessionData();
-
-      setUnseal((prevSeal) => ({
-        ...prevSeal,
-        userID: unsealed.userID,
-        email: unsealed.email,
-        userIP: unsealed.userIP,
-        randomNano: unsealed.randomNano,
-      }));
-    }
-    if (session !== "" && isAuth === true) {
-      fetchData();
-    }
-  }, [isAuth, session]);
 
   // useeffect to auto-close dropdown menu at specific width
   useEffect(() => {
@@ -201,59 +156,40 @@ export default function Menu() {
   return (
     <>
       <div className={styles.nav}>
-        {isAuth && (
-          <>
-            <div
-              className={styles.navitem}
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            >
-              <Link
-                href={`/adatlap/u/${unseal.userID}`}
-                className={styles.link}
-              >
-                <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
-              </Link>
-            </div>
-            <div
-              className={styles.navitem}
-              onClick={async () => {
-                setIsOpen(false);
-                await UpdateSession(unseal.userID);
-                setIsAuth(false);
-                setSession("");
-                setUnseal({
-                  userID: "",
-                  email: "",
-                  userIP: "",
-                  randomNano: "",
-                });
-                router.push("/");
-              }}
-            >
-              <Link href="/" className={styles.link}>
-                <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" />{" "}
-                Kilépés
-              </Link>
-            </div>
-          </>
-        )}
-        {!isAuth && (
-          <>
-            <div className={styles.navitem}>
-              <Link href="/signin" className={styles.link}>
-                <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-                Bejelentkezés
-              </Link>
-            </div>
-            <div className={styles.navitem}>
-              <Link href="/signup" className={styles.link}>
-                <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
-              </Link>
-            </div>
-          </>
-        )}
+        {/* <div
+          className={styles.navitem}
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        >
+          <Link href={`/adatlap/u/${unseal.userID}`} className={styles.link}>
+            <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
+          </Link>
+        </div> */}
+        <div
+          className={styles.navitem}
+          onClick={async () => {
+            setIsOpen(false);
+            router.push("/");
+          }}
+        >
+          <Link href="/" className={styles.link}>
+            <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés
+          </Link>
+        </div>
+
+        <div className={styles.navitem}>
+          <Link href="/signin" className={styles.link}>
+            <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
+            Bejelentkezés
+          </Link>
+        </div>
+        <div className={styles.navitem}>
+          <Link href="/signup" className={styles.link}>
+            <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+          </Link>
+        </div>
+
         <div className={styles.navitem}>
           <Link href="/" className={styles.link}>
             <FontAwesomeIcon icon={faNewspaper} size="sm" /> Hírek
@@ -282,8 +218,7 @@ export default function Menu() {
       </div>
 
       <div className={styles.shrunk1150}>
-        {isAuth && (
-          <>
+        {/* <>
             <div
               className={styles.navitem}
               onClick={() => {
@@ -301,15 +236,6 @@ export default function Menu() {
               className={styles.navitem}
               onClick={async () => {
                 setIsOpen(false);
-                await UpdateSession(unseal.userID);
-                setIsAuth(false);
-                setSession("");
-                setUnseal({
-                  userID: "",
-                  email: "",
-                  userIP: "",
-                  randomNano: "",
-                });
                 router.push("/");
               }}
             >
@@ -317,36 +243,30 @@ export default function Menu() {
                 <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" />{" "}
                 Kilépés
               </Link>
-            </div>
-          </>
-        )}
-        {!isAuth && (
-          <>
-            <div className={styles.navitem}>
-              <Link
-                href="/signin"
-                className={styles.link}
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              >
-                <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-                Bejelentkezés
-              </Link>
-            </div>
-            <div className={styles.navitem}>
-              <Link
-                href="/signup"
-                className={styles.link}
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              >
-                <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
-              </Link>
-            </div>
-          </>
-        )}
+            </div> */}
+        <div className={styles.navitem}>
+          <Link
+            href="/signin"
+            className={styles.link}
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
+            Bejelentkezés
+          </Link>
+        </div>
+        <div className={styles.navitem}>
+          <Link
+            href="/signup"
+            className={styles.link}
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+          </Link>
+        </div>
         <div className={styles.navitem}>
           <Link
             href="/"
@@ -461,9 +381,7 @@ export default function Menu() {
             ref={dropdownRef650}
           >
             <div className={styles.hamburgerMenu}>
-              {isAuth && (
-                <>
-                  <div
+              {/* <div
                     className={styles.navitem}
                     onClick={() => {
                       setIsOpen(false);
@@ -475,61 +393,42 @@ export default function Menu() {
                     >
                       <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
                     </Link>
-                  </div>
-                  <div
-                    className={styles.navitem}
-                    onClick={async () => {
-                      setIsOpen(false);
-                      await UpdateSession(unseal.userID);
-                      setIsAuth(false);
-                      setSession("");
-                      setUnseal({
-                        userID: "",
-                        email: "",
-                        userIP: "",
-                        randomNano: "",
-                      });
-                      router.push("/");
-                    }}
-                  >
-                    <Link href="/" className={styles.link}>
-                      <FontAwesomeIcon
-                        icon={faArrowRightFromBracket}
-                        size="sm"
-                      />{" "}
-                      Kilépés
-                    </Link>
-                  </div>
-                </>
-              )}
-              {!isAuth && (
-                <>
-                  <div className={styles.navitem}>
-                    <Link
-                      href="/signin"
-                      className={styles.link}
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-                      Bejelentkezés
-                    </Link>
-                  </div>
-                  <div className={styles.navitem}>
-                    <Link
-                      href="/signup"
-                      className={styles.link}
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faUserPlus} size="sm" />{" "}
-                      Regisztráció
-                    </Link>
-                  </div>
-                </>
-              )}
+                  </div> */}
+              <div
+                className={styles.navitem}
+                onClick={async () => {
+                  setIsOpen(false);
+                  router.push("/");
+                }}
+              >
+                <Link href="/" className={styles.link}>
+                  <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" />{" "}
+                  Kilépés
+                </Link>
+              </div>
+              <div className={styles.navitem}>
+                <Link
+                  href="/signin"
+                  className={styles.link}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
+                  Bejelentkezés
+                </Link>
+              </div>
+              <div className={styles.navitem}>
+                <Link
+                  href="/signup"
+                  className={styles.link}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+                </Link>
+              </div>
               <div className={styles.navitem}>
                 <Link
                   href="#"

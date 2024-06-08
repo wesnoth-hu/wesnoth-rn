@@ -3,17 +3,17 @@
 
 import type { loginEmailType } from "@/lib/login/loginEmailType";
 import type { loginUserType } from "@/lib/login/loginUserType";
+import type { User } from "@/lib/user/user";
 import { cookies } from "next/headers";
 import * as Iron from "@hapi/iron";
 import { prisma } from "@/lib/prisma/client";
-import { User } from "@/lib/user";
 import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
 const bcrypt = require("bcrypt");
 
 export async function userLoginEmailDB(
   loginEmail: loginEmailType
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; error?: string; admin?: string }> {
   try {
     const cookieStore = cookies();
     const dbSessionID = nanoid(16);
@@ -28,7 +28,10 @@ export async function userLoginEmailDB(
     });
 
     if (!findUserByEmail) {
-      return { success: false, error: "A megadott emailcím nem létezik" };
+      return {
+        success: false,
+        error: "A megadott emailcím hibás vagy nem létezik",
+      };
     }
 
     const passMatchEmail = await bcrypt.compare(
@@ -68,18 +71,18 @@ export async function userLoginEmailDB(
     await prisma.$disconnect();
     return { success: true };
   } catch (error) {
-    console.error("Error during login:", error);
     await prisma.$disconnect();
     return {
       success: false,
       error: "Hiba tőrtént a bejelentkezés során",
+      admin: `userLoginEmailDB - ${error}`,
     };
   }
 }
 
 export async function userLoginUserDB(
   loginUser: loginUserType
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; error?: string; admin?: string }> {
   try {
     const cookieStore = cookies();
     const dbSessionID = nanoid(16);
@@ -94,7 +97,10 @@ export async function userLoginUserDB(
     });
 
     if (!findUserByUsername) {
-      return { success: false, error: "A megadott felhasználónév hibás" };
+      return {
+        success: false,
+        error: "A megadott felhasználónév hibás vagy nem létezik",
+      };
     }
 
     const passMatchUser = await bcrypt.compare(
@@ -130,8 +136,11 @@ export async function userLoginUserDB(
     await prisma.$disconnect();
     return { success: true };
   } catch (error) {
-    console.error("Error during login:", error);
     await prisma.$disconnect();
-    return { success: false, error: "Hiba történt a bejelentkezés során" };
+    return {
+      success: false,
+      error: "Hiba történt a bejelentkezés során",
+      admin: `userLoginUserDB - ${error}`,
+    };
   }
 }
