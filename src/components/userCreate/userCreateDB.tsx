@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma/client";
 import { signUpType } from "@/lib/signup/signUpType";
 import { nanoid } from "nanoid";
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 export default async function userCreateDB(signup: signUpType): Promise<void> {
   const userId = nanoid(16);
@@ -21,6 +21,7 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
         passwordHash: hashedPass,
         race: signup.race,
         emailVerified: false,
+        status: "active",
       },
     });
   } catch (err) {

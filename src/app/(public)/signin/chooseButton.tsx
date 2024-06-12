@@ -1,9 +1,9 @@
 "use client";
 import React, { Dispatch, SetStateAction } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotate } from "@fortawesome/free-solid-svg-icons";
+import Icon from "@mdi/react";
+import { mdiRotate3dVariant } from "@mdi/js";
 import styles from "@/styles/Login.module.css";
-import { ValidationError } from "@/lib/ZodError";
+import { ValidationError } from "@/lib/zod/ZodError";
 import { loginZodSchema } from "@/lib/login/loginZodSchema";
 
 export default function ChooseButton({
@@ -26,9 +26,9 @@ export default function ChooseButton({
           setChoose(!choose), setErrors({}), resetForm(), resetCustomError();
         }}
       >
-        <FontAwesomeIcon
-          icon={faRotate}
-          size="xs"
+        <Icon
+          path={mdiRotate3dVariant}
+          size={0.8}
           className={choose ? styles.rotateOrigin : styles.rotate75}
         />
       </div>

@@ -4,19 +4,18 @@ import React, { useState, useEffect, useRef, type MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icon from "@mdi/react";
 import {
-  faUser,
-  faArrowRightFromBracket,
-  faArrowRightToBracket,
-  faUserPlus,
-  faNewspaper,
-  faMonument,
-  faTrophy,
-  faTableList,
-  faBars,
-  faCircleQuestion,
-} from "@fortawesome/free-solid-svg-icons";
+  mdiAccountPlus,
+  mdiLogin,
+  mdiLogout,
+  mdiMenu,
+  mdiNewspaperVariantMultiple,
+  mdiHistory,
+  mdiForum,
+  mdiHelpCircle,
+  mdiTrophy,
+} from "@mdi/js";
 
 import styles from "@/styles/Menu.module.css";
 
@@ -166,7 +165,7 @@ export default function Menu() {
             <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
           </Link>
         </div> */}
-        <div
+        {/* <div
           className={styles.navitem}
           onClick={async () => {
             setIsOpen(false);
@@ -176,43 +175,42 @@ export default function Menu() {
           <Link href="/" className={styles.link}>
             <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés
           </Link>
-        </div>
+        </div> */}
 
         <div className={styles.navitem}>
           <Link href="/signin" className={styles.link}>
-            <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-            Bejelentkezés
+            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
           </Link>
         </div>
         <div className={styles.navitem}>
           <Link href="/signup" className={styles.link}>
-            <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+            <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
           </Link>
         </div>
 
         <div className={styles.navitem}>
           <Link href="/" className={styles.link}>
-            <FontAwesomeIcon icon={faNewspaper} size="sm" /> Hírek
+            <Icon path={mdiNewspaperVariantMultiple} size={0.8} /> Hírek
           </Link>
         </div>
         <div className={styles.navitem}>
           <Link href="#" className={styles.link}>
-            <FontAwesomeIcon icon={faMonument} size="sm" /> Történelem
+            <Icon path={mdiHistory} size={0.8} /> Történelem
           </Link>
         </div>
         <div className={styles.navitem}>
           <Link href="#" className={styles.link}>
-            <FontAwesomeIcon icon={faTrophy} size="sm" /> Bajnokság
+            <Icon path={mdiTrophy} size={0.8} /> Bajnokság
           </Link>
         </div>
         <div className={styles.navitem}>
           <Link href="#" className={styles.link}>
-            <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
+            <Icon path={mdiForum} size={0.8} /> Fórum
           </Link>
         </div>
         <div className={styles.navitem}>
           <Link href="#" className={styles.link}>
-            <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
+            <Icon path={mdiHelpCircle} size={0.8} /> Súgó
           </Link>
         </div>
       </div>
@@ -252,8 +250,7 @@ export default function Menu() {
               setIsOpen(false);
             }}
           >
-            <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-            Bejelentkezés
+            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
           </Link>
         </div>
         <div className={styles.navitem}>
@@ -264,7 +261,7 @@ export default function Menu() {
               setIsOpen(false);
             }}
           >
-            <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+            <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
           </Link>
         </div>
         <div className={styles.navitem}>
@@ -275,7 +272,7 @@ export default function Menu() {
               setIsOpen(false);
             }}
           >
-            <FontAwesomeIcon icon={faNewspaper} size="sm" /> Hírek
+            <Icon path={mdiNewspaperVariantMultiple} size={0.8} /> Hírek
           </Link>
         </div>
         <div
@@ -283,7 +280,7 @@ export default function Menu() {
           className={styles.menu1150}
           onClick={handleMenuToggle}
         >
-          <FontAwesomeIcon icon={faBars} size="sm" /> Menü
+          <Icon path={mdiMenu} size={0.8} /> Menü
         </div>
       </div>
 
@@ -307,7 +304,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faMonument} size="sm" /> Történelem
+                  <Icon path={mdiHistory} size={0.8} /> Történelem
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -318,7 +315,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faTrophy} size="sm" /> Bajnokság
+                  <Icon path={mdiTrophy} size={0.8} /> Bajnokság
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -329,7 +326,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
+                  <Icon path={mdiForum} size={0.8} /> Fórum
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -340,7 +337,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
+                  <Icon path={mdiHelpCircle} size={0.8} /> Súgó
                 </Link>
               </div>
             </div>
@@ -357,7 +354,7 @@ export default function Menu() {
               setIsOpen(false);
             }}
           >
-            <FontAwesomeIcon icon={faNewspaper} size="sm" /> Hírek
+            <Icon path={mdiNewspaperVariantMultiple} size={0.8} /> Hírek
           </Link>
         </div>
         <div
@@ -365,7 +362,7 @@ export default function Menu() {
           className={styles.menu650}
           onClick={handleMenuToggle}
         >
-          <FontAwesomeIcon icon={faBars} size="sm" /> Menü
+          <Icon path={mdiMenu} size={0.8} /> Menü
         </div>
       </div>
 
@@ -394,7 +391,7 @@ export default function Menu() {
                       <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
                     </Link>
                   </div> */}
-              <div
+              {/* <div
                 className={styles.navitem}
                 onClick={async () => {
                   setIsOpen(false);
@@ -402,10 +399,9 @@ export default function Menu() {
                 }}
               >
                 <Link href="/" className={styles.link}>
-                  <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" />{" "}
-                  Kilépés
+                  <Icon path={mdiLogout} size={0.8} /> Kilépés
                 </Link>
-              </div>
+              </div> */}
               <div className={styles.navitem}>
                 <Link
                   href="/signin"
@@ -414,8 +410,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faArrowRightToBracket} size="sm" />{" "}
-                  Bejelentkezés
+                  <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -426,7 +421,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faUserPlus} size="sm" /> Regisztráció
+                  <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -437,7 +432,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faMonument} size="sm" /> Történelem
+                  <Icon path={mdiHistory} size={0.8} /> Történelem
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -448,7 +443,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faTrophy} size="sm" /> Bajnokság
+                  <Icon path={mdiTrophy} size={0.8} /> Bajnokság
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -459,7 +454,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faTableList} size="sm" /> Fórum
+                  <Icon path={mdiForum} size={0.8} /> Fórum
                 </Link>
               </div>
               <div className={styles.navitem}>
@@ -470,7 +465,7 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <FontAwesomeIcon icon={faCircleQuestion} size="sm" /> Súgó
+                  <Icon path={mdiHelpCircle} size={0.8} /> Súgó
                 </Link>
               </div>
             </div>

@@ -16,11 +16,17 @@ model user {
   race          String       @db.VarChar(100)
   level         Int          @default(1) @db.UnsignedInt
   money         Int          @default(100) @db.UnsignedInt
+  mfaEnabled    Boolean      @default(false)
+  mfaComplete   Boolean      @default(false)
+  status        String       @db.VarChar(100)
+  lockedAt      DateTime?    @default(now()) @db.Timestamp(0)
   createdAt     DateTime     @default(now()) @db.Timestamp(0)
   updatedAt     DateTime     @default(now()) @updatedAt @db.Timestamp(0)
+  codes         codes[]
   comment       comment[]
   compressed    compressed[]
   media         media[]
+  mfa           mfa?
   post          post[]
   session       session[]
 }
@@ -87,4 +93,26 @@ model compressed {
   user       user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "compressed_user_FK")
 
   @@index([userID], map: "compressed_user_FK")
+}
+
+model codes {
+  id        String   @id @db.VarChar(16)
+  userID    String   @db.VarChar(16)
+  codeType  String   @db.VarChar(100)
+  code      String   @db.VarChar(1000)
+  expired   Boolean  @default(false)
+  used      Boolean  @default(false)
+  usedAt    DateTime @default(now()) @db.Timestamp(0)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  user      user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "codes_user_FK")
+
+  @@index([userID], map: "codes_user_FK")
+}
+
+model mfa {
+  id        String   @id @db.VarChar(16)
+  userID    String   @unique(map: "mfa_unique") @db.VarChar(16)
+  secret    String   @db.LongText
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  user      user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "mfa_user_FK")
 }

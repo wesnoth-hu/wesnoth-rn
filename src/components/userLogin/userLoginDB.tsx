@@ -9,7 +9,7 @@ import * as Iron from "@hapi/iron";
 import { prisma } from "@/lib/prisma/client";
 import { nanoid } from "nanoid";
 import { publicIpv4 } from "public-ip";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 export async function userLoginEmailDB(
   loginEmail: loginEmailType
@@ -17,7 +17,7 @@ export async function userLoginEmailDB(
   try {
     const cookieStore = cookies();
     const dbSessionID = nanoid(16);
-    const ironPass = process.env.IRON_SESSION_PW as string;
+    const ironPass = process.env.IRONPASS as string;
     const userIP = await publicIpv4();
     const randomNano = nanoid(32);
 
@@ -86,7 +86,7 @@ export async function userLoginUserDB(
   try {
     const cookieStore = cookies();
     const dbSessionID = nanoid(16);
-    const ironPass = process.env.IRON_SESSION_PW as string;
+    const ironPass = process.env.IRONPASS as string;
     const userIP = await publicIpv4();
     const randomNano = nanoid(32);
 

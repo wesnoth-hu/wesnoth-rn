@@ -8,7 +8,7 @@ import { User } from "@/lib/user/user";
 export default async function GetUser(): Promise<User> {
   const cookieStore = cookies();
 
-  const IronPass: string = process.env.IRON_SESSION_PW as string;
+  const IronPass: string = process.env.IRONPASS as string;
 
   const unsealed: UnsealObject = await Iron.unseal(
     cookieStore.get("userSession")?.value as string,
