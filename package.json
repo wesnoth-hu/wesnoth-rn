@@ -9,42 +9,32 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@casl/ability": "^6.7.0",
-    "@casl/prisma": "^1.4.1",
-    "@casl/react": "^3.1.0",
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.19.0",
-    "@emailjs/nodejs": "^2.2.0",
-    "@hapi/iron": "^7.0.1",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "@prisma/client": "^5.15.0",
+    "@prisma/client": "^5.16.1",
+    "@simplewebauthn/browser": "^10.0.0",
+    "@simplewebauthn/server": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.3",
-    "clsx": "^2.1.1",
-    "cron": "^3.1.7",
-    "nanoid": "^5.0.4",
-    "next": "^14.2.3",
-    "node-2fa": "^2.0.3",
-    "public-ip": "^6.0.1",
-    "qrcode": "^1.5.3",
+    "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.2",
-    "zod": "^3.22.4",
-    "zustand": "^4.5.2"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.18",
+    "@simplewebauthn/types": "^10.0.0",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prisma": "^5.15.0",
-    "typescript": "^5.4.3"
+    "prisma": "^5.16.1",
+    "typescript": "^5.5.2"
   }
 }
