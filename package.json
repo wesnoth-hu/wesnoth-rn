@@ -11,19 +11,29 @@
   "dependencies": {
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.19.0",
+    "@emailjs/nodejs": "^4.0.4",
+    "@hapi/iron": "^7.0.1",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "@prisma/client": "^5.16.1",
+    "@prisma/client": "^5.17.0",
     "@simplewebauthn/browser": "^10.0.0",
     "@simplewebauthn/server": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.3",
-    "next": "^14.2.4",
+    "clsx": "^2.1.1",
+    "cron": "^3.1.7",
+    "nanoid": "^5.0.7",
+    "next": "^14.2.5",
+    "node-2fa": "^2.0.3",
+    "public-ip": "^6.0.2",
+    "qrcode": "^1.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.2",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@simplewebauthn/types": "^10.0.0",
@@ -34,7 +44,7 @@
     "eslint-config-next": "^14.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prisma": "^5.16.1",
+    "prisma": "^5.17.0",
     "typescript": "^5.5.2"
   }
 }

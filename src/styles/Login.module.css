@@ -1,0 +1,76 @@
+.main {
+  margin: 0px auto;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.form {
+  margin: 0px auto;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.error > * {
+  margin-top: 10px;
+}
+
+.labels,
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs > *:nth-child(-n + 3) {
+  border: 0px;
+  border-bottom: 1px solid black;
+  background-color: #dad1a0;
+}
+
+.labels > * {
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 25px;
+  width: 100px;
+}
+
+.inputs > * {
+  width: 140px;
+  height: 20.5px;
+  padding: 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 25px;
+}
+
+.chooseButton {
+  display: flex;
+  flex-direction: column;
+  width: 13px;
+  height: 20.5px;
+  padding: 0px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 25px;
+}
+
+.rotateOrigin {
+  transform: rotate(0deg);
+}
+
+.rotate75 {
+  transform: rotate(75deg);
+}

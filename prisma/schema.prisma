@@ -8,19 +8,27 @@ datasource db {
 }
 
 model user {
-  id         String       @id @db.VarChar(16)
-  username   String       @unique(map: "user_unique_1") @db.VarChar(100)
-  email      String       @unique(map: "user_unique") @db.VarChar(100)
-  race       String       @db.VarChar(100)
-  level      Int          @default(1) @db.UnsignedInt
-  money      Int          @default(100) @db.UnsignedInt
-  status     String       @db.VarChar(100)
-  createdAt  DateTime     @default(now()) @db.Timestamp(0)
-  updatedAt  DateTime     @default(now()) @updatedAt @db.Timestamp(0)
-  comment    comment[]
-  compressed compressed[]
-  media      media[]
-  post       post[]
+  id            String       @id @db.VarChar(16)
+  username      String       @unique(map: "user_unique_1") @db.VarChar(100)
+  email         String       @unique(map: "user_unique") @db.VarChar(100)
+  emailVerified Boolean      @default(false)
+  passwordHash  String       @db.VarChar(100)
+  mfaEnabled    Boolean      @default(false)
+  mfaComplete   Boolean      @default(false)
+  race          String       @db.VarChar(100)
+  level         Int          @default(1) @db.UnsignedInt
+  money         Int          @default(100) @db.UnsignedInt
+  status        String       @db.VarChar(100)
+  lockedAt      DateTime?    @db.Timestamp(0)
+  createdAt     DateTime     @default(now()) @db.Timestamp(0)
+  updatedAt     DateTime     @default(now()) @updatedAt @db.Timestamp(0)
+  codes         codes[]
+  comment       comment[]
+  compressed    compressed[]
+  media         media[]
+  mfa           mfa[]
+  post          post[]
+  session       session[]
 }
 
 model comment {
@@ -73,4 +81,40 @@ model compressed {
   user       user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "compressed_user_FK")
 
   @@index([userID], map: "compressed_user_FK")
+}
+
+model codes {
+  id        String   @id @db.VarChar(16)
+  userID    String   @db.VarChar(16)
+  codeType  String   @db.VarChar(20)
+  code      String   @db.VarChar(1000)
+  used      Boolean  @default(false)
+  usedAt    DateTime @default(now()) @db.Timestamp(0)
+  expired   Boolean  @default(false)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  user      user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "codes_user_FK")
+
+  @@index([userID], map: "codes_user_FK")
+}
+
+model mfa {
+  id        String   @id @db.VarChar(16)
+  userID    String   @db.VarChar(100)
+  secret    String   @db.VarChar(1000)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  user      user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "mfa_user_FK")
+
+  @@index([userID], map: "mfa_user_FK")
+}
+
+model session {
+  id          String   @id @db.VarChar(16)
+  userID      String   @db.VarChar(16)
+  sessiondata String   @db.VarChar(1000)
+  loginAt     DateTime @default(now()) @db.Timestamp(0)
+  logoutAt    DateTime @default(now()) @db.Timestamp(0)
+  status      String   @db.VarChar(20)
+  user        user     @relation(fields: [userID], references: [id], onDelete: Cascade, map: "session_user_FK")
+
+  @@index([userID], map: "session_user_FK")
 }

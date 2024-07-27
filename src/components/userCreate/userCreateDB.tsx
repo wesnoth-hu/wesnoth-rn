@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 "use server";
 
+import SendEmailVerification from "@/actions/emailVerify/sendEmailVerification";
 import { prisma } from "@/lib/prisma/client";
 import { signUpType } from "@/lib/signup/signUpType";
 import { nanoid } from "nanoid";
@@ -23,6 +24,11 @@ export default async function userCreateDB(signup: signUpType): Promise<void> {
         emailVerified: false,
         status: "active",
       },
+    });
+
+    await SendEmailVerification({
+      username: signup.username,
+      email: signup.email,
     });
   } catch (err) {
     console.log("Error: ", err);
