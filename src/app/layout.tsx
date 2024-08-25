@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import React from "react";
 
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+
 import localFont from "next/font/local";
 import Image from "next/image";
 
@@ -31,43 +33,45 @@ export default function RootLayout({
   return (
     <React.StrictMode>
       <html lang="en">
-        <body className={ebg.className}>
-          <main className={styles.main}>
-            <header>
-              <div className={styles.fejlec}>
-                <div className={styles.logo}>
-                  <Image
-                    src="/logo-hu.png"
-                    alt="Hungarian Wesnoth Logo"
-                    width={415}
-                    height={189}
-                    priority
-                    className={styles.logoImg}
-                  />
+        <UserProvider>
+          <body className={ebg.className}>
+            <main className={styles.main}>
+              <header>
+                <div className={styles.fejlec}>
+                  <div className={styles.logo}>
+                    <Image
+                      src="/logo-hu.png"
+                      alt="Hungarian Wesnoth Logo"
+                      width={415}
+                      height={189}
+                      priority
+                      className={styles.logoImg}
+                    />
+                  </div>
+
+                  <nav>
+                    <Menu />
+                  </nav>
                 </div>
+              </header>
 
-                <nav>
-                  <Menu />
-                </nav>
-              </div>
-            </header>
+              <section>
+                <div className={styles.tartkozep}>
+                  {/*Aside Left*/}
+                  <div className={styles.sideProfile}>Side</div>
+                  {/*Section*/}
+                  <div className={styles.kozep}>{children}</div>
+                </div>
+              </section>
 
-            <section>
-              <div className={styles.tartkozep}>
-                {/*Aside Left*/}
-                <div className={styles.sideProfile}>Side</div>
-                {/*Section*/}
-                <div className={styles.kozep}>{children}</div>
-              </div>
-            </section>
-
-            <footer>
-              <div className={styles.lablec}>
-                <Footer />
-              </div>
-            </footer>
-          </main>
-        </body>
+              <footer>
+                <div className={styles.lablec}>
+                  <Footer />
+                </div>
+              </footer>
+            </main>
+          </body>
+        </UserProvider>
       </html>
     </React.StrictMode>
   );
