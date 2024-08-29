@@ -4,17 +4,20 @@ import React, { useState, useEffect, useRef, type MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { useUser } from "@auth0/nextjs-auth0/client";
+
 import Icon from "@mdi/react";
 import {
-  mdiAccountPlus,
+  //mdiAccountPlus,
   mdiLogin,
-  mdiLogout,
   mdiMenu,
   mdiNewspaperVariantMultiple,
   mdiHistory,
   mdiForum,
   mdiHelpCircle,
   mdiTrophy,
+  mdiLogout,
+  mdiFaceManProfile,
 } from "@mdi/js";
 
 import styles from "@/styles/Menu.module.css";
@@ -23,6 +26,8 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const router = useRouter();
+
+  const { user } = useUser();
 
   const handleMenuToggle = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -155,38 +160,44 @@ export default function Menu() {
   return (
     <>
       <div className={styles.nav}>
-        {/* <div
-          className={styles.navitem}
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          <Link href={`/adatlap/u/${unseal.userID}`} className={styles.link}>
-            <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
-          </Link>
-        </div> */}
-        {/* <div
-          className={styles.navitem}
-          onClick={async () => {
-            setIsOpen(false);
-            router.push("/");
-          }}
-        >
-          <Link href="/" className={styles.link}>
-            <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" /> Kilépés
-          </Link>
-        </div> */}
-
-        <div className={styles.navitem}>
-          <Link href="/signin" className={styles.link}>
-            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
-          </Link>
-        </div>
-        <div className={styles.navitem}>
+        {user ? (
+          <>
+            <div
+              className={styles.navitem}
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              <Link href={`/profile/`} className={styles.link}>
+                <Icon path={mdiFaceManProfile} size={0.8} /> Adatlap
+              </Link>
+            </div>
+            <div
+              className={styles.navitem}
+              onClick={async () => {
+                setIsOpen(false);
+                router.push("/api/auth/logout");
+              }}
+            >
+              <Link href="/" className={styles.link}>
+                <Icon path={mdiLogout} size={0.8} /> Kilépés
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.navitem}>
+              <Link href="/api/auth/login" className={styles.link}>
+                <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
+              </Link>
+            </div>
+          </>
+        )}
+        {/* <div className={styles.navitem}>
           <Link href="/signup" className={styles.link}>
             <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
           </Link>
-        </div>
+        </div> */}
 
         <div className={styles.navitem}>
           <Link href="/" className={styles.link}>
@@ -244,16 +255,16 @@ export default function Menu() {
             </div> */}
         <div className={styles.navitem}>
           <Link
-            href="/signin"
+            href="/api/auth/login"
             className={styles.link}
             onClick={() => {
               setIsOpen(false);
             }}
           >
-            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
+            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
           </Link>
         </div>
-        <div className={styles.navitem}>
+        {/* <div className={styles.navitem}>
           <Link
             href="/signup"
             className={styles.link}
@@ -263,7 +274,7 @@ export default function Menu() {
           >
             <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
           </Link>
-        </div>
+        </div> */}
         <div className={styles.navitem}>
           <Link
             href="/"
@@ -410,10 +421,10 @@ export default function Menu() {
                     setIsOpen(false);
                   }}
                 >
-                  <Icon path={mdiLogin} size={0.8} /> Bejelentkezés
+                  <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
                 </Link>
               </div>
-              <div className={styles.navitem}>
+              {/* <div className={styles.navitem}>
                 <Link
                   href="/signup"
                   className={styles.link}
@@ -423,7 +434,7 @@ export default function Menu() {
                 >
                   <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
                 </Link>
-              </div>
+              </div> */}
               <div className={styles.navitem}>
                 <Link
                   href="#"

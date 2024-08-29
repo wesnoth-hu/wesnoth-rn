@@ -8,10 +8,7 @@ Tech Stack:
 4. Zod
 5. TypeScript
 6. MySQL
-7. Custom AuthN System
-8. MDI
-9. Cloudinary
-10. BCrypt
-11. Nanoid
-12. @HAPI/Iron
-13. Cron
+7. MDI
+8. Cloudinary
+9. Auth0 by Okta
+10. Zustand
