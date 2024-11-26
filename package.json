@@ -10,32 +10,27 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
-    "@cloudinary/react": "^1.13.0",
-    "@cloudinary/url-gen": "^1.19.0",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "@prisma/client": "^5.17.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.0.3",
-    "nanoid": "^5.0.7",
-    "next": "^14.2.5",
+    "@prisma/client": "^5.22.0",
+    "axios": "^1.7.7",
+    "next": "^15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sharp": "^0.33.2",
+    "sharp": "^0.33.5",
     "zod": "^3.23.8",
-    "zustand": "^4.5.4"
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prisma": "^5.17.0",
-    "typescript": "^5.5.2"
+    "@types/node": "^20.17.8",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "eslint": "^9.15.0",
+    "eslint-config-next": "^14.2.18",
+    "eslint-config-react-hooks": "^1.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "prisma": "^5.22.0",
+    "typescript": "^5.7.2"
   }
 }

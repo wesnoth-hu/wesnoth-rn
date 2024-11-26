@@ -9,6 +9,5 @@ Tech Stack:
 5. TypeScript
 6. MySQL
 7. MDI
-8. Cloudinary
-9. Auth0 by Okta
-10. Zustand
+8. Auth0 by Okta
+9. Zustand

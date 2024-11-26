@@ -8,7 +8,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 
 import Icon from "@mdi/react";
 import {
-  //mdiAccountPlus,
+  mdiAccountPlus,
   mdiLogin,
   mdiMenu,
   mdiNewspaperVariantMultiple,
@@ -176,7 +176,7 @@ export default function Menu() {
               className={styles.navitem}
               onClick={async () => {
                 setIsOpen(false);
-                router.push("/api/auth/logout");
+                router.push("/clear");
               }}
             >
               <Link href="/" className={styles.link}>
@@ -187,17 +187,15 @@ export default function Menu() {
         ) : (
           <>
             <div className={styles.navitem}>
-              <Link href="/api/auth/login" className={styles.link}>
+              <Link
+                href="/api/auth/login?returnTo=/verify"
+                className={styles.link}
+              >
                 <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
               </Link>
             </div>
           </>
         )}
-        {/* <div className={styles.navitem}>
-          <Link href="/signup" className={styles.link}>
-            <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
-          </Link>
-        </div> */}
 
         <div className={styles.navitem}>
           <Link href="/" className={styles.link}>
@@ -227,54 +225,43 @@ export default function Menu() {
       </div>
 
       <div className={styles.shrunk1150}>
-        {/* <>
+        {user ? (
+          <>
             <div
               className={styles.navitem}
               onClick={() => {
                 setIsOpen(false);
               }}
             >
-              <Link
-                href={`/adatlap/u/${unseal.userID}`}
-                className={styles.link}
-              >
-                <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
+              <Link href={`/profile/`} className={styles.link}>
+                <Icon path={mdiFaceManProfile} size={0.8} /> Adatlap
               </Link>
             </div>
             <div
               className={styles.navitem}
               onClick={async () => {
                 setIsOpen(false);
-                router.push("/");
+                router.push("/clear");
               }}
             >
               <Link href="/" className={styles.link}>
-                <FontAwesomeIcon icon={faArrowRightFromBracket} size="sm" />{" "}
-                Kilépés
+                <Icon path={mdiLogout} size={0.8} /> Kilépés
               </Link>
-            </div> */}
-        <div className={styles.navitem}>
-          <Link
-            href="/api/auth/login"
-            className={styles.link}
-            onClick={() => {
-              setIsOpen(false);
-            }}
-          >
-            <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
-          </Link>
-        </div>
-        {/* <div className={styles.navitem}>
-          <Link
-            href="/signup"
-            className={styles.link}
-            onClick={() => {
-              setIsOpen(false);
-            }}
-          >
-            <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
-          </Link>
-        </div> */}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.navitem}>
+              <Link
+                href="/api/auth/login?returnTo=/verify"
+                className={styles.link}
+              >
+                <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/{" "}
+                <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
+              </Link>
+            </div>
+          </>
+        )}
         <div className={styles.navitem}>
           <Link
             href="/"
@@ -378,110 +365,101 @@ export default function Menu() {
       </div>
 
       {windowWidth < 650 && isOpen && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              top: `${menuTopLeft.screenY}px`,
-              left: `${menuTopLeft.screenX}px`,
-              zIndex: 1,
-            }}
-            ref={dropdownRef650}
-          >
-            <div className={styles.hamburgerMenu}>
-              {/* <div
-                    className={styles.navitem}
-                    onClick={() => {
-                      setIsOpen(false);
-                    }}
-                  >
-                    <Link
-                      href={`/adatlap/u/${unseal.userID}`}
-                      className={styles.link}
-                    >
-                      <FontAwesomeIcon icon={faUser} size="sm" /> Adatlap
-                    </Link>
-                  </div> */}
-              {/* <div
-                className={styles.navitem}
-                onClick={async () => {
-                  setIsOpen(false);
-                  router.push("/");
-                }}
-              >
-                <Link href="/" className={styles.link}>
-                  <Icon path={mdiLogout} size={0.8} /> Kilépés
-                </Link>
-              </div> */}
+        <div
+          style={{
+            position: "absolute",
+            top: `${menuTopLeft.screenY}px`,
+            left: `${menuTopLeft.screenX}px`,
+            zIndex: 1,
+          }}
+          ref={dropdownRef650}
+        >
+          <div className={styles.hamburgerMenu}>
+            {user ? (
+              <>
+                <div
+                  className={styles.navitem}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                  role="menuitem"
+                  tabIndex={0}
+                >
+                  <Link href={`/profile/`} className={styles.link}>
+                    <Icon path={mdiFaceManProfile} size={0.8} /> Adatlap
+                  </Link>
+                </div>
+                <div
+                  className={styles.navitem}
+                  onClick={async () => {
+                    setIsOpen(false);
+                    router.push("/clear");
+                  }}
+                  role="menuitem"
+                  tabIndex={0}
+                >
+                  <Link href="/" className={styles.link}>
+                    <Icon path={mdiLogout} size={0.8} /> Kilépés
+                  </Link>
+                </div>
+              </>
+            ) : (
               <div className={styles.navitem}>
                 <Link
-                  href="/signin"
+                  href="/api/auth/login?returnTo=/verify"
                   className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
                 >
-                  <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/Regisztráció
-                </Link>
-              </div>
-              {/* <div className={styles.navitem}>
-                <Link
-                  href="/signup"
-                  className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
+                  <Icon path={mdiLogin} size={0.8} /> Bejelentkezés/{" "}
                   <Icon path={mdiAccountPlus} size={0.8} /> Regisztráció
                 </Link>
-              </div> */}
-              <div className={styles.navitem}>
-                <Link
-                  href="#"
-                  className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
-                  <Icon path={mdiHistory} size={0.8} /> Történelem
-                </Link>
               </div>
-              <div className={styles.navitem}>
-                <Link
-                  href="#"
-                  className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
-                  <Icon path={mdiTrophy} size={0.8} /> Bajnokság
-                </Link>
-              </div>
-              <div className={styles.navitem}>
-                <Link
-                  href="#"
-                  className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
-                  <Icon path={mdiForum} size={0.8} /> Fórum
-                </Link>
-              </div>
-              <div className={styles.navitem}>
-                <Link
-                  href="#"
-                  className={styles.link}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
-                  <Icon path={mdiHelpCircle} size={0.8} /> Súgó
-                </Link>
-              </div>
+            )}
+            <div className={styles.navitem}>
+              <Link
+                href="#"
+                className={styles.link}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                <Icon path={mdiHistory} size={0.8} /> Történelem
+              </Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link
+                href="#"
+                className={styles.link}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                <Icon path={mdiTrophy} size={0.8} /> Bajnokság
+              </Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link
+                href="#"
+                className={styles.link}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                <Icon path={mdiForum} size={0.8} /> Fórum
+              </Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link
+                href="#"
+                className={styles.link}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                <Icon path={mdiHelpCircle} size={0.8} /> Súgó
+              </Link>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );
